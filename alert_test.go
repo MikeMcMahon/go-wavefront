@@ -134,7 +134,7 @@ func TestAlerts_CreateUpdateDeleteAlert(t *testing.T) {
 	}
 
 	a.client.(*MockCrudAlertClient).method = "DELETE"
-	if err := a.Delete(&alert); err != nil {
+	if err := a.Delete(&alert, true); err != nil {
 		t.Error(err)
 	}
 
@@ -194,7 +194,7 @@ func TestMultiThresholdAlerts_CreateUpdateDeleteAlert(t *testing.T) {
 	}
 
 	a.client.(*MockCrudAlertClient).method = "DELETE"
-	if err := a.Delete(&alert); err != nil {
+	if err := a.Delete(&alert, true); err != nil {
 		t.Error(err)
 	}
 

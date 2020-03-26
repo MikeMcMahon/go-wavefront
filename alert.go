@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strconv"
 )
 
 const (
@@ -138,7 +139,7 @@ func (a Alerts) Get(alert *Alert) error {
 		return fmt.Errorf("alert id field is not set")
 	}
 
-	return a.crudAlert("GET", fmt.Sprintf("%s/%s", baseAlertPath, *alert.ID), alert)
+	return a.crudAlert("GET", fmt.Sprintf("%s/%s", baseAlertPath, *alert.ID), alert, nil)
 }
 
 // Find returns all alerts filtered by the given search conditions.
@@ -175,7 +176,7 @@ func (a Alerts) Find(filter []*SearchCondition) ([]*Alert, error) {
 // Create is used to create an Alert in Wavefront.
 // If successful, the ID field of the alert will be populated.
 func (a Alerts) Create(alert *Alert) error {
-	return a.crudAlert("POST", baseAlertPath, alert)
+	return a.crudAlert("POST", baseAlertPath, alert, nil)
 }
 
 // Update is used to update an existing Alert.
@@ -185,18 +186,22 @@ func (a Alerts) Update(alert *Alert) error {
 		return fmt.Errorf("alert id field not set")
 	}
 
-	return a.crudAlert("PUT", fmt.Sprintf("%s/%s", baseAlertPath, *alert.ID), alert)
+	return a.crudAlert("PUT", fmt.Sprintf("%s/%s", baseAlertPath, *alert.ID), alert, nil)
 
 }
 
 // Delete is used to delete an existing Alert.
 // The ID field of the alert must be populated
-func (a Alerts) Delete(alert *Alert) error {
+func (a Alerts) Delete(alert *Alert, skipTrash bool) error {
 	if alert.ID == nil {
 		return fmt.Errorf("alert id field not set")
 	}
 
-	err := a.crudAlert("DELETE", fmt.Sprintf("%s/%s", baseAlertPath, *alert.ID), alert)
+	params := map[string]string{
+		"skipTrash": strconv.FormatBool(skipTrash),
+	}
+
+	err := a.crudAlert("DELETE", fmt.Sprintf("%s/%s", baseAlertPath, *alert.ID), alert, &params)
 	if err != nil {
 		return err
 	}
@@ -214,12 +219,12 @@ func (a Alerts) SetACL(id string, canView, canModify []string) error {
 	return putEntityACL(id, canView, canModify, baseAlertPath, a.client)
 }
 
-func (a Alerts) crudAlert(method, path string, alert *Alert) error {
+func (a Alerts) crudAlert(method, path string, alert *Alert, params *map[string]string) error {
 	payload, err := json.Marshal(alert)
 	if err != nil {
 		return err
 	}
-	req, err := a.client.NewRequest(method, path, nil, payload)
+	req, err := a.client.NewRequest(method, path, params, payload)
 	if err != nil {
 		return err
 	}

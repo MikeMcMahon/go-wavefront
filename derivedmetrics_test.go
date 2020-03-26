@@ -122,7 +122,7 @@ func TestDerivedMetrics_CRUD(t *testing.T) {
 	_ = d.Update(derivedMetric)
 
 	d.client.(*MockCrudDerivedMetricsClient).method = "DELETE"
-	_ = d.Delete(derivedMetric)
+	_ = d.Delete(derivedMetric, true)
 	if *derivedMetric.ID != "" {
 		t.Errorf("expected id to be empty, got %s", *derivedMetric.ID)
 	}

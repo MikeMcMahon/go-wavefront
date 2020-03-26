@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strconv"
 )
 
 // Dashboard represents a single Wavefront Dashboard
@@ -315,7 +316,7 @@ func (a Dashboards) Find(filter []*SearchCondition) ([]*Dashboard, error) {
 // Create is used to create an Dashboard in Wavefront.
 // If successful, the ID field of the Dashboard will be populated.
 func (a Dashboards) Create(dashboard *Dashboard) error {
-	return a.crudDashboard("POST", baseDashboardPath, dashboard)
+	return a.crudDashboard("POST", baseDashboardPath, dashboard, nil)
 }
 
 // Update is used to update an existing Dashboard.
@@ -325,7 +326,8 @@ func (a Dashboards) Update(dashboard *Dashboard) error {
 		return fmt.Errorf("dashboard id field not set")
 	}
 
-	return a.crudDashboard("PUT", fmt.Sprintf("%s/%s", baseDashboardPath, dashboard.ID), dashboard)
+	return a.crudDashboard("PUT",
+		fmt.Sprintf("%s/%s", baseDashboardPath, dashboard.ID), dashboard, nil)
 
 }
 
@@ -336,17 +338,23 @@ func (a Dashboards) Get(dashboard *Dashboard) error {
 		return fmt.Errorf("dashboard id field is not set")
 	}
 
-	return a.crudDashboard("GET", fmt.Sprintf("%s/%s", baseDashboardPath, dashboard.ID), dashboard)
+	return a.crudDashboard("GET",
+		fmt.Sprintf("%s/%s", baseDashboardPath, dashboard.ID), dashboard, nil)
 }
 
 // Delete is used to delete an existing Dashboard.
 // The ID field of the Dashboard must be populated
-func (a Dashboards) Delete(dashboard *Dashboard) error {
+func (a Dashboards) Delete(dashboard *Dashboard, skipTrash bool) error {
 	if dashboard.ID == "" {
 		return fmt.Errorf("dashboard id field not set")
 	}
 
-	err := a.crudDashboard("DELETE", fmt.Sprintf("%s/%s", baseDashboardPath, dashboard.ID), dashboard)
+	params := map[string]string{
+		"skipTrash": strconv.FormatBool(skipTrash),
+	}
+
+	err := a.crudDashboard("DELETE",
+		fmt.Sprintf("%s/%s", baseDashboardPath, dashboard.ID), dashboard, &params)
 	if err != nil {
 		return err
 	}
@@ -363,12 +371,12 @@ func (a Dashboards) SetACL(id string, canView, canModify []string) error {
 	return putEntityACL(id, canView, canModify, baseDashboardPath, a.client)
 }
 
-func (a Dashboards) crudDashboard(method, path string, dashboard *Dashboard) error {
+func (a Dashboards) crudDashboard(method, path string, dashboard *Dashboard, params *map[string]string) error {
 	payload, err := json.Marshal(dashboard)
 	if err != nil {
 		return err
 	}
-	req, err := a.client.NewRequest(method, path, nil, payload)
+	req, err := a.client.NewRequest(method, path, params, payload)
 	if err != nil {
 		return err
 	}

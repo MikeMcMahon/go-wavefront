@@ -129,7 +129,7 @@ func TestDashboards_CreateUpdateDeleteDashboard(t *testing.T) {
 	}
 
 	a.client.(*MockCrudDashboardClient).method = "DELETE"
-	if err := a.Delete(&dashboard); err != nil {
+	if err := a.Delete(&dashboard, true); err != nil {
 		t.Error(err)
 	}
 
