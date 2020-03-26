@@ -72,6 +72,15 @@ type Alert struct {
 
 	FailingHostLabelPairs       []SourceLabelPair `json:"failingHostLabelPairs,omitempty"`
 	InMaintenanceHostLabelPairs []SourceLabelPair `json:"inMaintenanceHostLabelPairs,omitempty"`
+
+	// The interval between checks for this alert, in minutes
+	CheckingFrequencyInMinutes int `json:"processRateMinutes,omitempty"`
+
+	// Real-Time Alerting, evaluate the alert strictly on ingested data without accounting for delays
+	EvaluateRealtimeData bool `json:"evaluateRealtimeData,omitempty"`
+
+	// Include obsolete metrics in alert query
+	IncludeObsoleteMetrics bool `json:"includeObsoleteMetrics,omitempty"`
 }
 
 type SourceLabelPair struct {
