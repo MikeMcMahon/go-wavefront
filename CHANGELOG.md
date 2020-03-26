@@ -1,6 +1,6 @@
 # Changelog
 
-Changelog for go-wavefront.
+Changelog for go-wavefront-management-api.
 
 ## [1.7.3]
 
