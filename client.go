@@ -150,6 +150,8 @@ func (c Client) Do(req *http.Request) (io.ReadCloser, error) {
 		if err != nil {
 			return nil, err
 		}
+		// reset the body since we read it already
+		req.Body = ioutil.NopCloser(bytes.NewReader(buf))
 	}
 
 	for {

@@ -3,7 +3,6 @@ package wavefront
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"strconv"
 )
 
@@ -54,7 +53,7 @@ func (dm DerivedMetrics) Get(metric *DerivedMetric) error {
 	if *metric.ID == "" {
 		return fmt.Errorf("id must be specified")
 	}
-	return dm.crudDerivedMetrics("GET",
+	return basicCrud(dm.client, "GET",
 		fmt.Sprintf("%s/%s", baseDerivedMetricsPath, *metric.ID), metric, nil)
 }
 
@@ -95,7 +94,7 @@ func (dm DerivedMetrics) Create(metric *DerivedMetric) error {
 		return fmt.Errorf("name, query, and minutes must be specified to create a derived metric")
 	}
 
-	return dm.crudDerivedMetrics("POST", baseDerivedMetricsPath, metric, nil)
+	return basicCrud(dm.client, "POST", baseDerivedMetricsPath, metric, nil)
 }
 
 // Update a DerivedMetric all fields are optional except for ID
@@ -104,7 +103,7 @@ func (dm DerivedMetrics) Update(metric *DerivedMetric) error {
 		return fmt.Errorf("id must be specified")
 	}
 
-	return dm.crudDerivedMetrics("PUT",
+	return basicCrud(dm.client, "PUT",
 		fmt.Sprintf("%s/%s", baseDerivedMetricsPath, *metric.ID), metric, nil)
 }
 
@@ -118,40 +117,11 @@ func (dm DerivedMetrics) Delete(metric *DerivedMetric, skipTrash bool) error {
 		"skipTrash": strconv.FormatBool(skipTrash),
 	}
 
-	err := dm.crudDerivedMetrics("DELETE",
+	err := basicCrud(dm.client, "DELETE",
 		fmt.Sprintf("%s/%s", baseDerivedMetricsPath, *metric.ID), metric, &params)
 	if err != nil {
 		return err
 	}
 	*metric.ID = ""
 	return nil
-}
-
-func (dm DerivedMetrics) crudDerivedMetrics(method, path string, metric *DerivedMetric,
-	params *map[string]string) error {
-	payload, err := json.Marshal(metric)
-	if err != nil {
-		return err
-	}
-	req, err := dm.client.NewRequest(method, path, params, payload)
-	if err != nil {
-		return err
-	}
-
-	resp, err := dm.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Close()
-
-	body, err := ioutil.ReadAll(resp)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(body, &struct {
-		Response *DerivedMetric
-	}{
-		Response: metric,
-	})
 }
