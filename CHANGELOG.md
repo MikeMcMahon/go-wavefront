@@ -2,6 +2,23 @@
 
 Changelog for go-wavefront-management-api.
 
+## [1.7.4]
+*Add Support for CloudIntegrations*  
+*Add Support for Advanced Alert settings*
+
+- CheckingFrequencyInMinutes
+- EvaluateRealtimeData
+- IncludeObsoleteMetrics
+
+*Common client operations refactored into centralized location*  
+*Added support for skipTrash*
+
+- Alerts
+- Dashboards
+- DerivedMetrics
+
+*Fixed some failing tests*
+
 ## [1.7.3]
 
 - Fixing go.mod file 
