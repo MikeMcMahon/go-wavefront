@@ -1,6 +1,9 @@
 package wavefront
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type CloudIntegration struct {
 	ForceSave bool   `json:"forceSave"`
@@ -234,19 +237,7 @@ type AzureBaseCredentials struct {
 	Tenant string `json:"tenant"`
 }
 
-const (
-	CLOUDWATCH               = "CLOUDWATCH"
-	CLOUDTRAIL               = "CLOUDTRAIL"
-	EC2                      = "EC2"
-	GCP                      = "GCP"
-	GCPBILLING               = "GCPBILLING"
-	TESLA                    = "TESLA"
-	AZURE                    = "AZURE"
-	AZUREACTIVITYLOG         = "AZUREACTIVITYLOG"
-	NEWRELIC                 = "NEWRELIC"
-	APPDYNAMICS              = "APPDYNAMICS"
-	baseCloudIntegrationPath = "/api/v2/cloudintegration"
-)
+const baseCloudIntegrationPath = "/api/v2/cloudintegration"
 
 type CloudIntegrations struct {
 	client Wavefronter
@@ -254,6 +245,35 @@ type CloudIntegrations struct {
 
 func (c *Client) CloudIntegrations() *CloudIntegrations {
 	return &CloudIntegrations{client: c}
+}
+
+func (ci CloudIntegrations) Find(filter []*SearchCondition) ([]*CloudIntegration, error) {
+	search := &Search{
+		client: ci.client,
+		Type:   "cloudintegration",
+		Params: &SearchParams{
+			Conditions: filter,
+		},
+	}
+
+	var results []*CloudIntegration
+	moreItems := true
+	for moreItems == true {
+		resp, err := search.Execute()
+		if err != nil {
+			return nil, err
+		}
+		var tmpres []*CloudIntegration
+		err = json.Unmarshal(resp.Response.Items, &tmpres)
+		if err != nil {
+			return nil, err
+		}
+		results = append(results, tmpres...)
+		moreItems = resp.Response.MoreItems
+		search.Params.Offset = resp.NextOffset
+	}
+
+	return results, nil
 }
 
 // Get a CloudIntegration for a given ID
