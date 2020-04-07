@@ -3,6 +3,7 @@ package wavefront
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 type CloudIntegration struct {
@@ -82,12 +83,12 @@ type CloudWatchConfiguration struct {
 	// A comma-separated white list of AWS instance tag-value pairs (in AWS).
 	// If the instance's AWS tags match this whitelist, CloudWatch data about this instance is ingested.
 	// Multiple entries are OR'ed
-	InstanceSelectionTags []string `json:"instanceSelectionTags,omitempty"`
+	InstanceSelectionTags string `json:"instanceSelectionTags,omitempty"`
 
 	// A comma-separated white list of AWS volume tag-value pairs (in AWS).
 	// If the volume's AWS tags match this whitelist, CloudWatch data about this volume is ingested.
 	// Multiple entries are OR'ed
-	VolumeSelectionTags []string `json:"volumeSelectionTags,omitempty"`
+	VolumeSelectionTags string `json:"volumeSelectionTags,omitempty"`
 
 	// A regular expression that AWS tag key name must match (case-insensitively) in order to be ingested
 	PointTagFilterRegex string `json:"pointTagFilterRegex,omitempty"`
@@ -278,22 +279,27 @@ func (ci CloudIntegrations) Find(filter []*SearchCondition) ([]*CloudIntegration
 
 // Get a CloudIntegration for a given ID
 // ID must be specified
-func (ci CloudIntegrations) Get(cloudIntegration CloudIntegration) error {
+func (ci CloudIntegrations) Get(cloudIntegration *CloudIntegration) error {
 	if cloudIntegration.Id == "" {
 		return fmt.Errorf("cloud integration id must be specified")
 	}
 	return basicCrud(ci.client, "GET",
-		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), &cloudIntegration, nil)
+		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), cloudIntegration, nil)
 }
 
 // Deletes a given CloudIntegration and sets the ID of the object to ""
 // ID must be specified
-func (ci CloudIntegrations) Delete(cloudIntegration CloudIntegration) error {
+func (ci CloudIntegrations) Delete(cloudIntegration *CloudIntegration, skipTrash bool) error {
 	if cloudIntegration.Id == "" {
 		return fmt.Errorf("cloud integration id must be specified")
 	}
+
+	params := &map[string]string{
+		"skipTrash": strconv.FormatBool(skipTrash),
+	}
+
 	err := basicCrud(ci.client, "DELETE",
-		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), &cloudIntegration, nil)
+		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), cloudIntegration, params)
 	if err == nil {
 		cloudIntegration.Id = ""
 	}
@@ -301,22 +307,22 @@ func (ci CloudIntegrations) Delete(cloudIntegration CloudIntegration) error {
 }
 
 // Updates a given CloudIntegration in Wavefront
-func (ci CloudIntegrations) Update(cloudIntegration CloudIntegration) error {
+func (ci CloudIntegrations) Update(cloudIntegration *CloudIntegration) error {
 	if cloudIntegration.Id == "" {
 		return fmt.Errorf("cloud integration id must be specified")
 	}
 	return basicCrud(ci.client, "PUT",
-		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), &cloudIntegration, nil)
+		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), cloudIntegration, nil)
 }
 
 // Creates a CloudIntegration in Wavefront
 // If successful, the ID field will be populated
-func (ci CloudIntegrations) Create(cloudIntegration CloudIntegration) error {
+func (ci CloudIntegrations) Create(cloudIntegration *CloudIntegration) error {
 	if cloudIntegration.Id == "" {
 		return fmt.Errorf("cloud integration id must be specified")
 	}
 	return basicCrud(ci.client, "PUT",
-		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), &cloudIntegration, nil)
+		fmt.Sprintf("%s/%s", baseCloudIntegrationPath, cloudIntegration.Id), cloudIntegration, nil)
 }
 
 // Creates an AWS ExternalID for use in AWS IAM Roles
