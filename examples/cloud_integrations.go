@@ -26,9 +26,9 @@ func main() {
 	cloudWatchIntegration := wavefront.CloudIntegration{
 		Name:    "example-cloud-watch-integration",
 		Service: "CLOUDWATCH",
-		CloudWatch: wavefront.CloudWatchConfiguration{
+		CloudWatch: &wavefront.CloudWatchConfiguration{
 			MetricFilterRegex: "^(ec2|elb).*$",
-			BaseCredentials: wavefront.AWSBaseCredentials{
+			BaseCredentials: &wavefront.AWSBaseCredentials{
 				RoleARN:    "arn:aws:iam:1234567890:role/example-cloud-watch-integration",
 				ExternalID: externalId,
 			},
