@@ -36,6 +36,9 @@ type Event struct {
 
 	// Instantaneous, if true, creates a point-in-time Event (i.e. with no duration)
 	Instantaneous bool `json:"isEphemeral"`
+
+	// Annotations on the event
+	Annotations map[string]string `json:"annotations"`
 }
 
 // Events is used to perform event-related operations against the Wavefront API
@@ -62,6 +65,7 @@ func (e *Event) UnmarshalJSON(b []byte) error {
 	e.Severity = temp.Annotations["severity"]
 	e.Type = temp.Annotations["type"]
 	e.Details = temp.Annotations["details"]
+	e.Annotations = temp.Annotations
 
 	return nil
 }
