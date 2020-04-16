@@ -103,7 +103,7 @@
       },
       {
         "forceSave": false,
-        "name": "sunnylabs-gcp",
+        "name": "example-gcp",
         "id": "12345678-1234-5678-9101-12345678910111",
         "service": "GCP",
         "inTrash": false,
@@ -113,8 +113,8 @@
         "lastMetricCount": 100,
         "gcp": {
           "metricFilterRegex": "",
-          "gcpJsonKey": "{\"project_id\": \"sunnylabs-gcp\"}",
-          "projectId": "sunnylabs-gcp",
+          "gcpJsonKey": "{\"project_id\": \"example-gcp\"}",
+          "projectId": "example-gcp",
           "categoriesToFetch": []
         },
         "disabled": false,
