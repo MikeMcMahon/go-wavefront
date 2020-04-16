@@ -14,7 +14,7 @@ type CloudIntegration struct {
 	Name string `json:"name"`
 
 	// A value denoting which cloud service this integration integrates with
-	Service string `json:"name"`
+	Service string `json:"service"`
 
 	// A value denoting whether or not this cloud integration is in the trashcan
 	InTrash bool `json:"inTrash,omitempty"`
@@ -26,7 +26,7 @@ type CloudIntegration struct {
 	UpdaterId string `json:"updaterId,omitempty"`
 
 	// Event of the last error encountered by Wavefront servers when fetching data using this integration
-	LastErrorEvent Event `json:"lastErrorEvent,omitempty"`
+	LastErrorEvent *Event `json:"lastErrorEvent,omitempty"`
 
 	// A list of point tag key-values to add to every point ingested using this integration
 	AdditionalTags map[string]string `json:"additionalTags"`
@@ -37,18 +37,15 @@ type CloudIntegration struct {
 	// Number of metrics / events ingested by this integration the last time it ran
 	LastMetricCount int `json:"lastMetricCount,omitempty"`
 
-	CloudWatch       CloudWatchConfiguration       `json:"cloudWatch,omitempty"`
-	CloudTrail       CloudTrailConfiguration       `json:"cloudTrail,omitempty"`
-	EC2              EC2Configuration              `json:"ec2,omitempty"`
-	GCP              GCPConfiguration              `json:"gcp,omitempty"`
-	GCPBilling       GCPBillingConfiguration       `json:"gcpBilling,omitempty"`
-	NewRelic         NewRelicConfiguration         `json:"newRelic,omitempty"`
-	Tesla            TeslaConfiguration            `json:"tesla,omitempty"`
-	Azure            AzureConfiguration            `json:"azure,omitempty"`
-	AzureActivityLog AzureActivityLogConfiguration `json:"azureActivityLog,omitempty"`
-
-	// Digest of the last error encountered by Wavefront servers when fetching data using this integration
-	LastError string `json:"lastError,omitempty"`
+	CloudWatch       *CloudWatchConfiguration       `json:"cloudWatch,omitempty"`
+	CloudTrail       *CloudTrailConfiguration       `json:"cloudTrail,omitempty"`
+	EC2              *EC2Configuration              `json:"ec2,omitempty"`
+	GCP              *GCPConfiguration              `json:"gcp,omitempty"`
+	GCPBilling       *GCPBillingConfiguration       `json:"gcpBilling,omitempty"`
+	NewRelic         *NewRelicConfiguration         `json:"newRelic,omitempty"`
+	Tesla            *TeslaConfiguration            `json:"tesla,omitempty"`
+	Azure            *AzureConfiguration            `json:"azure,omitempty"`
+	AzureActivityLog *AzureActivityLogConfiguration `json:"azureActivityLog,omitempty"`
 
 	// Time, in epoch millis, of the last error encountered by Wavefront servers when fetching data using this integration.
 	LastErrorMs int `json:"lastErrorMs,omitempty"`
@@ -78,17 +75,17 @@ type CloudWatchConfiguration struct {
 	// A list of namespace that limit what we query from cloudwatch
 	Namespaces []string `json:"namespaces,omitempty"`
 
-	BaseCredentials AWSBaseCredentials `json:"baseCredentials,omitempty"`
+	BaseCredentials *AWSBaseCredentials `json:"baseCredentials,omitempty"`
 
 	// A comma-separated white list of AWS instance tag-value pairs (in AWS).
 	// If the instance's AWS tags match this whitelist, CloudWatch data about this instance is ingested.
 	// Multiple entries are OR'ed
-	InstanceSelectionTags string `json:"instanceSelectionTags,omitempty"`
+	InstanceSelectionTags map[string]string `json:"instanceSelectionTags,omitempty"`
 
 	// A comma-separated white list of AWS volume tag-value pairs (in AWS).
 	// If the volume's AWS tags match this whitelist, CloudWatch data about this volume is ingested.
 	// Multiple entries are OR'ed
-	VolumeSelectionTags string `json:"volumeSelectionTags,omitempty"`
+	VolumeSelectionTags map[string]string `json:"volumeSelectionTags,omitempty"`
 
 	// A regular expression that AWS tag key name must match (case-insensitively) in order to be ingested
 	PointTagFilterRegex string `json:"pointTagFilterRegex,omitempty"`
@@ -100,7 +97,7 @@ type CloudTrailConfiguration struct {
 	// The common prefix, if any, appended to all CloudTrail log files
 	Prefix string `json:"prefix,omitempty"`
 
-	BaseCredentials AWSBaseCredentials `json:"baseCredentials,omitempty"`
+	BaseCredentials *AWSBaseCredentials `json:"baseCredentials,omitempty"`
 
 	// Name of the S3 bucket where CloudTrail logs are stored
 	BucketName string `json:"bucketName"`
@@ -109,7 +106,7 @@ type CloudTrailConfiguration struct {
 	FilterRule string `json:"filterRule"`
 }
 type EC2Configuration struct {
-	BaseCredentials AWSBaseCredentials `json:"baseCredentials,omitempty"`
+	BaseCredentials *AWSBaseCredentials `json:"baseCredentials,omitempty"`
 
 	// A list of AWS instance tags that, when found, will be used as the "source" name in a series.
 	// Default: hostname, host, name
@@ -153,7 +150,7 @@ type NewRelicConfiguration struct {
 	// A regular expression that a host name must match (case-insensitively) in order to collect metrics
 	HostFilterRegex string `json:"hostFilterRegex,omitempty"`
 
-	NewRelicMetricFilters []NewRelicMetricFilters `json:"newRelicMetricFilters,omitempty"`
+	NewRelicMetricFilters []*NewRelicMetricFilters `json:"newRelicMetricFilters,omitempty"`
 }
 type AppDynamicsConfiguration struct {
 	// Username is a combination of username and the account name
@@ -200,7 +197,7 @@ type AzureConfiguration struct {
 	// A regular expression that a CloudWatch metric name must match (case-insensitively) in order to be ingested
 	MetricFilterRegex string `json:"metricFilterRegex,omitempty"`
 
-	BaseCredentials AzureBaseCredentials `json:"baseCredentials,omitempty"`
+	BaseCredentials *AzureBaseCredentials `json:"baseCredentials,omitempty"`
 
 	// A list of Azure services (such as Microsoft.Compute/virtualMachines,Microsoft.Cache/redis etc) from which to pull
 	// metrics
@@ -210,7 +207,7 @@ type AzureConfiguration struct {
 	ResourceGroupFilter []string `json:"resourceGroupFilter,omitempty"`
 }
 type AzureActivityLogConfiguration struct {
-	BaseCredentials AzureBaseCredentials `json:"baseCredentials,omitempty"`
+	BaseCredentials *AzureBaseCredentials `json:"baseCredentials,omitempty"`
 
 	// A list of Azure ActivityLog categories to pull events for
 	CategoryFilter []string `json:"categoryFilter,omitempty"`

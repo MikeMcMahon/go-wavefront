@@ -47,7 +47,10 @@ func main() {
 	}
 
 	// Update an existing integration
-	cloudWatchIntegration.CloudWatch.InstanceSelectionTags = "env:prod,role:app"
+	cloudWatchIntegration.CloudWatch.InstanceSelectionTags = map[string]string{
+		"env":  "prod",
+		"role": "app",
+	}
 
 	err = cloudIntegrations.Update(&cloudWatchIntegration)
 
