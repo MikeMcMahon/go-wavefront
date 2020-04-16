@@ -16,8 +16,10 @@ Changelog for go-wavefront-management-api.
 - Alerts
 - Dashboards
 - DerivedMetrics
+- CloudIntegrations
 
-*Fixed some failing tests*
+*Fixed some failing tests*  
+*Add Annotations field to Events*
 
 ## [1.7.3]
 
