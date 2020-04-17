@@ -43,6 +43,7 @@ type CloudIntegration struct {
 	GCP              *GCPConfiguration              `json:"gcp,omitempty"`
 	GCPBilling       *GCPBillingConfiguration       `json:"gcpBilling,omitempty"`
 	NewRelic         *NewRelicConfiguration         `json:"newRelic,omitempty"`
+	AppDynamics      *AppDynamicsConfiguration      `json:"appDynamics,omitempty"`
 	Tesla            *TeslaConfiguration            `json:"tesla,omitempty"`
 	Azure            *AzureConfiguration            `json:"azure,omitempty"`
 	AzureActivityLog *AzureActivityLogConfiguration `json:"azureActivityLog,omitempty"`
@@ -103,7 +104,7 @@ type CloudTrailConfiguration struct {
 	BucketName string `json:"bucketName"`
 
 	// Rule to filter cloud trail log event
-	FilterRule string `json:"filterRule"`
+	FilterRule string `json:"filterRule,omitempty"`
 }
 type EC2Configuration struct {
 	BaseCredentials *AWSBaseCredentials `json:"baseCredentials,omitempty"`
