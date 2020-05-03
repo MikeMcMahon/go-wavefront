@@ -2,8 +2,20 @@
 
 Changelog for go-wavefront-management-api.
 
-## [1.7.4]
-*Add Support for CloudIntegrations*  
+## [1.8.0]
+
+*Add Support for CloudIntegrations*   
+ - CloudWatch
+ - CloudTrail
+ - EC2
+ - GCP
+ - GCPBilling
+ - NewRelic
+ - AppDynamics
+ - Tesla
+ - Azure
+ - Azure Activity Log
+  
 *Add Support for Advanced Alert settings*
 
 - CheckingFrequencyInMinutes
