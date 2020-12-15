@@ -7,13 +7,11 @@ import (
 const basePolicyPath = "/api/v2/usage/ingestionpolicy"
 
 type IngestionPolicy struct {
-	ID                   *string `json:"id,omitempty"`
-	Name                 string  `json:"name"`
-	Description          string  `json:"description"`
-	lastUpdatedMs        int     `json:"lastUpdatedMs"`
-	lastUpdatedAccountId int     `json:"lastUpdatedAccountId"`
-	UserAccountCount     int     `json:"userAccountCount"`
-	ServiceAccountCount  int     `json:"serviceAccountCount"`
+	ID                  *string `json:"id,omitempty"`
+	Name                string  `json:"name"`
+	Description         string  `json:"description"`
+	UserAccountCount    int     `json:"userAccountCount"`
+	ServiceAccountCount int     `json:"serviceAccountCount"`
 }
 
 type IngestionPolicies struct {
