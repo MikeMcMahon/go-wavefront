@@ -10,13 +10,14 @@ const (
 
 // ServiceAccount represents a ServiceAccount in Wavefront
 type ServiceAccount struct {
-	ID          string      `json:"identifier"`
-	Description string      `json:"description"`
-	Permissions []string    `json:"groups"`
-	Active      bool        `json:"active"`
-	Roles       []Role      `json:"roles"`
-	UserGroups  []UserGroup `json:"userGroups"`
-	Tokens      []Token     `json:"tokens"`
+	ID              string          `json:"identifier"`
+	Description     string          `json:"description"`
+	Permissions     []string        `json:"groups"`
+	Active          bool            `json:"active"`
+	Roles           []Role          `json:"roles"`
+	UserGroups      []UserGroup     `json:"userGroups"`
+	Tokens          []Token         `json:"tokens"`
+	IngestionPolicy IngestionPolicy `json:"ingestionPolicy"`
 }
 
 // TokenIds returns the Ids of the tokens in this instance.
@@ -46,6 +47,11 @@ func (s *ServiceAccount) UserGroupIds() []string {
 		}
 	}
 	return result
+}
+
+// IngestionPolicyId returns the Id of the ingestion policy in this instance
+func (s *ServiceAccount) IngestionPolicyId() string {
+	return *s.IngestionPolicy.ID
 }
 
 // Options returns a ServiceAccountOptions prepopulated with the settings
