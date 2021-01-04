@@ -22,13 +22,13 @@ func (c *Client) IngestionPolicies() *IngestionPolicies {
 	return &IngestionPolicies{client: c}
 }
 
-func (e IngestionPolicies) Find(conditions []*SearchCondition) (
+func (p IngestionPolicies) Find(conditions []*SearchCondition) (
 	results []*IngestionPolicy, err error) {
-	err = doSearch(conditions, "ingestionpolicy", e.client, &results)
+	err = doSearch(conditions, "ingestionpolicy", p.client, &results)
 	return
 }
 
-func (e IngestionPolicies) Get(policy *IngestionPolicy) error {
+func (p IngestionPolicies) Get(policy *IngestionPolicy) error {
 	if policy.ID == nil || *policy.ID == "" {
 		return fmt.Errorf("id must be specified")
 	}
@@ -36,23 +36,23 @@ func (e IngestionPolicies) Get(policy *IngestionPolicy) error {
 	return doRest(
 		"GET",
 		fmt.Sprintf("%s/%s", basePolicyPath, *policy.ID),
-		e.client,
+		p.client,
 		doResponse(policy))
 }
 
-func (e IngestionPolicies) Create(policy *IngestionPolicy) error {
+func (p IngestionPolicies) Create(policy *IngestionPolicy) error {
 	if policy.Name == "" {
 		return fmt.Errorf("ingestion policy name must be specified")
 	}
 	return doRest(
 		"POST",
 		basePolicyPath,
-		e.client,
+		p.client,
 		doPayload(policy),
 		doResponse(policy))
 }
 
-func (e IngestionPolicies) Update(policy *IngestionPolicy) error {
+func (p IngestionPolicies) Update(policy *IngestionPolicy) error {
 	if policy.ID == nil || *policy.ID == "" {
 		return fmt.Errorf("id must be specified")
 	}
@@ -60,12 +60,12 @@ func (e IngestionPolicies) Update(policy *IngestionPolicy) error {
 	return doRest(
 		"PUT",
 		fmt.Sprintf("%s/%s", basePolicyPath, *policy.ID),
-		e.client,
+		p.client,
 		doPayload(policy),
 		doResponse(policy))
 }
 
-func (e IngestionPolicies) Delete(policy *IngestionPolicy) error {
+func (p IngestionPolicies) Delete(policy *IngestionPolicy) error {
 	if policy.ID == nil || *policy.ID == "" {
 		return fmt.Errorf("id must be specified")
 	}
@@ -73,7 +73,7 @@ func (e IngestionPolicies) Delete(policy *IngestionPolicy) error {
 	err := doRest(
 		"DELETE",
 		fmt.Sprintf("%s/%s", basePolicyPath, *policy.ID),
-		e.client)
+		p.client)
 	if err != nil {
 		return err
 	}
