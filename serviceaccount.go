@@ -8,7 +8,8 @@ const (
 	saEndpoint = "/api/v2/account/serviceaccount"
 )
 
-// ServiceAccount represents a ServiceAccount in Wavefront
+// ServiceAccount represents a ServiceAccount which exists in Wavefront. Note that here, roles,
+// groups, tokens and the ingestion policy are embedded structs.
 type ServiceAccount struct {
 	ID              string          `json:"identifier"`
 	Description     string          `json:"description"`
@@ -51,6 +52,10 @@ func (s *ServiceAccount) UserGroupIds() []string {
 
 // IngestionPolicyId returns the Id of the ingestion policy in this instance
 func (s *ServiceAccount) IngestionPolicyId() string {
+	if s.IngestionPolicy.ID == nil {
+		return ""
+	}
+
 	return *s.IngestionPolicy.ID
 }
 
@@ -58,17 +63,19 @@ func (s *ServiceAccount) IngestionPolicyId() string {
 // from this instance. Use this to update a ServiceAccount.
 func (s *ServiceAccount) Options() *ServiceAccountOptions {
 	return &ServiceAccountOptions{
-		ID:          s.ID,
-		Active:      s.Active,
-		Description: s.Description,
-		Permissions: s.Permissions,
-		Roles:       s.RoleIds(),
-		UserGroups:  s.UserGroupIds(),
+		ID:                s.ID,
+		Active:            s.Active,
+		Description:       s.Description,
+		Permissions:       s.Permissions,
+		Roles:             s.RoleIds(),
+		UserGroups:        s.UserGroupIds(),
+		IngestionPolicyID: s.IngestionPolicyId(),
 	}
 }
 
 // ServiceAccountOptions represents the options for creating or updating
-// a ServiceAccount in Wavefront
+// a ServiceAccount in Wavefront. Note that here, Roles, UserGroups and the ingestion policy are
+// the IDs of existing objects.
 type ServiceAccountOptions struct {
 
 	// Required
@@ -80,10 +87,11 @@ type ServiceAccountOptions struct {
 	// Always leave empty for now.
 	Tokens []string `json:"tokens"`
 
-	Description string   `json:"description,omitempty"`
-	Permissions []string `json:"groups,omitempty"`
-	Roles       []string `json:"roles,omitempty"`
-	UserGroups  []string `json:"userGroups,omitempty"`
+	Description       string   `json:"description,omitempty"`
+	Permissions       []string `json:"groups,omitempty"`
+	Roles             []string `json:"roles,omitempty"`
+	UserGroups        []string `json:"userGroups,omitempty"`
+	IngestionPolicyID string   `json:"ingestionPolicyId,omitempty"`
 }
 
 // ServiceAccounts is used to perform service account related operations
