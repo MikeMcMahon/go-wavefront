@@ -19,29 +19,33 @@ Please see the [examples](examples) directory for an example on how to use each,
 package main
 
 import (
-    "log"
+	"fmt"
 
-    wavefront "github.com/WavefrontHQ/go-wavefront-management-api"
+	wavefront "github.com/WavefrontHQ/go-wavefront-management-api"
 )
 
 func main() {
-    client, err := wavefront.NewClient{
-        &wavefront.Config{
-            Address: "test.wavefront.com",
-            Token:   "xxxx-xxxx-xxxx-xxxx-xxxx",
-        },
-    }
+	client, err := wavefront.NewClient(
+		&wavefront.Config{
+			Address: "test.wavefront.com",
+			Token:   "xxxx-xxxx-xxxx-xxxx-xxxx",
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
 
-    query := client.NewQuery(
-        wavefront.NewQueryParams(`ts("cpu.load.1m.avg", dc=dc1)`),
-    )
+	query := client.NewQuery(
+		wavefront.NewQueryParams(`ts("cpu.load.1m.avg", dc=dc1)`),
+	)
 
-    if result, err := query.Execute(); err != nil {
-        log.Fatal(err)
-    }
+	result, err := query.Execute()
+	if err != nil {
+		panic(err)
+	}
 
-    fmt.Println(result.TimeSeries[0].Label)
-    fmt.Println(result.TimeSeries[0].DataPoints[0])
+	fmt.Println(result.TimeSeries[0].Label)
+	fmt.Println(result.TimeSeries[0].DataPoints[0])
 }
 ```
 
