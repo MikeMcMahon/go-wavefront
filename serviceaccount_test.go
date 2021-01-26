@@ -50,7 +50,7 @@ func TestServiceAccounts_Find(t *testing.T) {
 	assertEqual(t, 1, len(serviceAccounts))
 	assertEqual(t, "sa::someid", serviceAccounts[0].ID)
 	assertEqual(t, "some-policy", serviceAccounts[0].IngestionPolicy.Name)
-	assertEqual(t, "some-policy-1579800000000", *serviceAccounts[0].IngestionPolicy.ID)
+	assertEqual(t, "some-policy-1579800000000", serviceAccounts[0].IngestionPolicy.ID)
 }
 
 func testClient(t *testing.T) *ServiceAccounts {

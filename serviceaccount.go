@@ -52,11 +52,7 @@ func (s *ServiceAccount) UserGroupIds() []string {
 
 // IngestionPolicyId returns the Id of the ingestion policy in this instance
 func (s *ServiceAccount) IngestionPolicyId() string {
-	if s.IngestionPolicy.ID == nil {
-		return ""
-	}
-
-	return *s.IngestionPolicy.ID
+	return s.IngestionPolicy.ID
 }
 
 // Options returns a ServiceAccountOptions prepopulated with the settings

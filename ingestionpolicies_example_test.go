@@ -34,7 +34,7 @@ func ExampleIngestionPolicies() {
 	}
 
 	// The ID field is now set, so we can update/delete the policy
-	fmt.Println("policy ID is", *policy.ID)
+	fmt.Println("policy ID is", policy.ID)
 
 	// Change the description
 	policy.Description = "an ingestion policy updated by the Go SDK test suite"

@@ -47,7 +47,7 @@ func TestIngestionPolicies_Find(t *testing.T) {
 	}
 
 	assertEqual(t, 1, len(ingestionPolicies))
-	assertEqual(t, "someid", *ingestionPolicies[0].ID)
+	assertEqual(t, "someid", ingestionPolicies[0].ID)
 }
 
 func TestIngestionPolicies_CreateUpdateDelete(t *testing.T) {
@@ -88,5 +88,5 @@ func TestIngestionPolicies_CreateUpdateDelete(t *testing.T) {
 	pol.client.(*MockCrudIngestionPoliciesClient).method = "DELETE"
 	var _ = pol.Delete(ingestionPolicy)
 
-	assertEqual(t, "", *ingestionPolicy.ID)
+	assertEqual(t, "test-policy-1607616352537", ingestionPolicy.ID)
 }
