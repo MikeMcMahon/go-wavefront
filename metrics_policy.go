@@ -43,7 +43,7 @@ func (m *MetricsPolicyAPI) Get() (*MetricsPolicy, error) {
 		"GET",
 		baseMetricsPolicyPath,
 		m.client,
-		doDirectResponse(&metricsPolicy),
+		doResponse(&metricsPolicy),
 	)
 	return &metricsPolicy, err
 }
@@ -55,7 +55,7 @@ func (m *MetricsPolicyAPI) Update(policyRules *UpdateMetricsPolicyRequest) (*Met
 		baseMetricsPolicyPath,
 		m.client,
 		doPayload(policyRules),
-		doDirectResponse(&metricsPolicy),
+		doResponse(&metricsPolicy),
 	)
 	return &metricsPolicy, err
 }
