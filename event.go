@@ -121,7 +121,7 @@ func (e Events) Find(filter []*SearchCondition, timeRange *TimeRange) ([]*Event,
 // If not found an error is returned
 func (e Events) FindByID(id string) (*Event, error) {
 	res, err := e.Find([]*SearchCondition{
-		&SearchCondition{
+		{
 			Key:            "id",
 			Value:          id,
 			MatchingMethod: "EXACT",
