@@ -9,7 +9,19 @@ type MetricsPolicy struct {
 }
 
 type UpdateMetricsPolicyRequest struct {
-	PolicyRules []PolicyRule `json:"policyRules,omitempty"`
+	PolicyRules []PolicyRuleRequest `json:"policyRules,omitempty"`
+}
+
+type PolicyRuleRequest struct {
+	Accounts     []string `json:"accounts,omitempty"`
+	UserGroupIds []string `json:"userGroups,omitempty"`
+	Roles        []string `json:"roles,omitempty"`
+	Name         string   `json:"name,omitempty"`
+	Tags         []string `json:"tags,omitempty"`
+	Description  string   `json:"description,omitempty"`
+	Prefixes     []string `json:"prefixes,omitempty"`
+	TagsAnded    bool     `json:"tagsAnded,omitempty"`
+	AccessType   string   `json:"accessType,omitempty"`
 }
 
 type PolicyRule struct {
@@ -22,6 +34,15 @@ type PolicyRule struct {
 	Prefixes    []string    `json:"prefixes,omitempty"`
 	TagsAnded   bool        `json:"tagsAnded,omitempty"`
 	AccessType  string      `json:"accessType,omitempty"`
+}
+
+type PolicyUserGroup struct {
+	// Unique ID for the user group
+	ID *string `json:"id,omitempty"`
+	// Name of the user group
+	Name string `json:"name,omitempty"`
+	// Description of the Group purpose
+	Description string `json:"description,omitempty"`
 }
 
 // MetricsPolicyAPI is used to perform MetricsPolicy-related operations against the Wavefront API
