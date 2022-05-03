@@ -8,14 +8,26 @@ type MetricsPolicy struct {
 	UpdatedEpochMillis int          `json:"updatedEpochMillis,omitempty"`
 }
 
+type PolicyRule struct {
+	Accounts    []User            `json:"accounts,omitempty"`
+	UserGroups  []PolicyUserGroup `json:"userGroups,omitempty"`
+	Roles       []Role            `json:"roles,omitempty"`
+	Name        string            `json:"name,omitempty"`
+	Tags        []string          `json:"tags,omitempty"`
+	Description string            `json:"description,omitempty"`
+	Prefixes    []string          `json:"prefixes,omitempty"`
+	TagsAnded   bool              `json:"tagsAnded,omitempty"`
+	AccessType  string            `json:"accessType,omitempty"`
+}
+
 type UpdateMetricsPolicyRequest struct {
 	PolicyRules []PolicyRuleRequest `json:"policyRules,omitempty"`
 }
 
 type PolicyRuleRequest struct {
-	Accounts     []string `json:"accounts,omitempty"`
+	AccountIds   []string `json:"accounts,omitempty"`
 	UserGroupIds []string `json:"userGroups,omitempty"`
-	Roles        []string `json:"roles,omitempty"`
+	RoleIds      []string `json:"roles,omitempty"`
 	Name         string   `json:"name,omitempty"`
 	Tags         []string `json:"tags,omitempty"`
 	Description  string   `json:"description,omitempty"`
@@ -24,21 +36,9 @@ type PolicyRuleRequest struct {
 	AccessType   string   `json:"accessType,omitempty"`
 }
 
-type PolicyRule struct {
-	Accounts    []string    `json:"accounts,omitempty"`
-	UserGroups  []UserGroup `json:"userGroups,omitempty"`
-	Roles       []string    `json:"roles,omitempty"`
-	Name        string      `json:"name,omitempty"`
-	Tags        []string    `json:"tags,omitempty"`
-	Description string      `json:"description,omitempty"`
-	Prefixes    []string    `json:"prefixes,omitempty"`
-	TagsAnded   bool        `json:"tagsAnded,omitempty"`
-	AccessType  string      `json:"accessType,omitempty"`
-}
-
 type PolicyUserGroup struct {
 	// Unique ID for the user group
-	ID *string `json:"id,omitempty"`
+	ID string `json:"id,omitempty"`
 	// Name of the user group
 	Name string `json:"name,omitempty"`
 	// Description of the Group purpose

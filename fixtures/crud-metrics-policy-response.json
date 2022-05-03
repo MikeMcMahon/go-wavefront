@@ -34,7 +34,7 @@
             "description": "Custom selector"
           }
         ],
-        "roles": ["abc123", "poi567"],
+        "roles": [{"id":"abc123"},{"id": "poi567"}],
         "name": "Allow Some Metrics",
         "tags": ["Custom"],
         "description": "Scoped filter for some.",

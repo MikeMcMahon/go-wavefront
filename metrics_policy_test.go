@@ -26,7 +26,7 @@ func (m *MockMetricsPolicyClient) Do(req *http.Request) (io.ReadCloser, error) {
 		return testDo(m.T, req, "./fixtures/crud-metrics-policy-default-response.json", "GET", &MetricsPolicy{})
 
 	case "PUT":
-		return testDo(m.T, req, "./fixtures/crud-metrics-policy-response.json", "PUT", &MetricsPolicy{})
+		return testDo(m.T, req, "./fixtures/crud-metrics-policy-response.json", "PUT", &UpdateMetricsPolicyRequest{})
 
 	default:
 		return nil, fmt.Errorf("unimplemented METHOD %s", req.Method)
@@ -51,9 +51,9 @@ func TestMetricsPolicy_Get(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, &MetricsPolicy{
 		PolicyRules: []PolicyRule{{
-			Accounts:    []string{},
-			UserGroups:  []UserGroup{{ID: &id}},
-			Roles:       []string{},
+			Accounts:    []User{},
+			UserGroups:  []PolicyUserGroup{{ID: id, Name: "Everyone", Description: "System group which contains all users"}},
+			Roles:       []Role{},
 			Name:        "Allow All Metrics",
 			Tags:        []string{},
 			Description: "Predefined policy rule. Allows access to all metrics (timeseries, histograms, and counters) for all accounts. If this rule is removed, all accounts can access all metrics if there are no matching blocking rules.",
@@ -83,9 +83,9 @@ func TestMetricsPolicy_Post(t *testing.T) {
 	id := "8bcffe68-5fcb-47fa-b935-ba7bc102b9a7"
 	id2 := "7y6ffe68-5fcb-47fa-b935-ba7bc102b9a7"
 	resp, err := m.Update(&UpdateMetricsPolicyRequest{PolicyRules: []PolicyRuleRequest{{
-		Accounts:     []string{},
+		AccountIds:   []string{},
 		UserGroupIds: []string{id},
-		Roles:        []string{},
+		RoleIds:      []string{},
 		Name:         "Allow All Metrics",
 		Tags:         []string{},
 		Description:  "Predefined policy rule. Allows access to all metrics (timeseries, histograms, and counters) for all accounts. If this rule is removed, all accounts can access all metrics if there are no matching blocking rules.",
@@ -94,9 +94,9 @@ func TestMetricsPolicy_Post(t *testing.T) {
 		AccessType:   "ALLOW",
 	},
 		{
-			Accounts:     []string{},
+			AccountIds:   []string{},
 			UserGroupIds: []string{id2},
-			Roles:        []string{"abc123", "poi567"},
+			RoleIds:      []string{"abc123", "poi567"},
 			Name:         "Allow Some Metrics",
 			Tags:         []string{"Custom"},
 			Description:  "Scoped filter for some.",
@@ -118,13 +118,13 @@ func TestMetricsPolicy_Post(t *testing.T) {
 	// TODO test object equality with pointer usergroup
 	//assert.Equal(t, &MetricsPolicy{
 	//	PolicyRules: []PolicyRule{{
-	//		Accounts: []string{},
+	//		AccountIds: []string{},
 	//		UserGroups: []UserGroup{{
 	//			ID:          &id,
 	//			Name:        "Everyone",
 	//			Description: "System group which contains all users",
 	//		}},
-	//		Roles:       []string{},
+	//		RoleIds:       []string{},
 	//		Name:        "Allow All Metrics",
 	//		Tags:        []string{},
 	//		Description: "Predefined policy rule. Allows access to all metrics (timeseries, histograms, and counters) for all accounts. If this rule is removed, all accounts can access all metrics if there are no matching blocking rules.",
@@ -133,13 +133,13 @@ func TestMetricsPolicy_Post(t *testing.T) {
 	//		AccessType:  "ALLOW",
 	//	},
 	//		{
-	//			Accounts: []string{},
+	//			AccountIds: []string{},
 	//			UserGroups: []UserGroup{{
 	//				ID:          &id2,
 	//				Name:        "Some",
 	//				Description: "Custom selector",
 	//			}},
-	//			Roles:       []string{"abc123", "poi567"},
+	//			RoleIds:       []string{"abc123", "poi567"},
 	//			Name:        "Allow Some Metrics",
 	//			Tags:        []string{"Custom"},
 	//			Description: "Scoped filter for some.",
