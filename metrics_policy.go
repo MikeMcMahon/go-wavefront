@@ -9,7 +9,7 @@ type MetricsPolicy struct {
 }
 
 type PolicyRule struct {
-	Accounts    []User            `json:"accounts,omitempty"`
+	Accounts    []PolicyUser      `json:"accounts,omitempty"`
 	UserGroups  []PolicyUserGroup `json:"userGroups,omitempty"`
 	Roles       []Role            `json:"roles,omitempty"`
 	Name        string            `json:"name,omitempty"`
@@ -34,6 +34,13 @@ type PolicyRuleRequest struct {
 	Prefixes     []string `json:"prefixes,omitempty"`
 	TagsAnded    bool     `json:"tagsAnded,omitempty"`
 	AccessType   string   `json:"accessType,omitempty"`
+}
+
+type PolicyUser struct {
+	// Unique ID for the user
+	ID string `json:"id,omitempty"`
+	// Name of the user
+	Name string `json:"name,omitempty"`
 }
 
 type PolicyUserGroup struct {

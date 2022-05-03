@@ -51,7 +51,7 @@ func TestMetricsPolicy_Get(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, &MetricsPolicy{
 		PolicyRules: []PolicyRule{{
-			Accounts:    []User{},
+			Accounts:    []PolicyUser{},
 			UserGroups:  []PolicyUserGroup{{ID: id, Name: "Everyone", Description: "System group which contains all users"}},
 			Roles:       []Role{},
 			Name:        "Allow All Metrics",
