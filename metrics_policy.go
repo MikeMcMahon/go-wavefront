@@ -51,7 +51,7 @@ func (m *MetricsPolicyAPI) Get() (*MetricsPolicy, error) {
 func (m *MetricsPolicyAPI) Update(policyRules *UpdateMetricsPolicyRequest) (*MetricsPolicy, error) {
 	metricsPolicy := MetricsPolicy{}
 	err := doRest(
-		"POST",
+		"PUT",
 		baseMetricsPolicyPath,
 		m.client,
 		doPayload(policyRules),
