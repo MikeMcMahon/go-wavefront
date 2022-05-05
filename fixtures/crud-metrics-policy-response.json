@@ -27,22 +27,54 @@
       },
       {
         "accounts": [],
-        "userGroups": [
+        "userGroups": [],
+        "roles": [
           {
-            "name": "Some",
-            "id": "7y6ffe68-5fcb-47fa-b935-ba7bc102b9a7",
-            "description": "Custom selector"
+            "name": "test-role1",
+            "id": "abc123",
+            "description": "misc"
+          },
+          {
+            "name": "test-role2",
+            "id": "poi567",
+            "description": ""
           }
         ],
-        "roles": [{"id":"abc123"},{"id": "poi567"}],
-        "name": "Allow Some Metrics",
-        "tags": ["Custom"],
-        "description": "Scoped filter for some.",
+        "name": "BLOCK Some Metrics by role",
+        "tags": [
+          "Custom"
+        ],
+        "description": "Scoped filter for roles.",
         "prefixes": [
-          "aa", "bb"
+          "aa.*",
+          "bb.*"
         ],
         "tagsAnded": true,
-        "accessType": "DENY"
+        "accessType": "BLOCK"
+      },
+      {
+        "accounts": [
+          {
+            "id": "test1@example.com",
+            "name": "test1@example.com"
+          },
+          {
+            "id": "test2@example.com",
+            "name": "test2@example.com"
+          }
+        ],
+        "userGroups": [],
+        "roles": [],
+        "name": "Allow Some Metrics by account",
+        "tags": [
+          "Custom"
+        ],
+        "description": "Scoped filter for users.",
+        "prefixes": [
+          "*"
+        ],
+        "tagsAnded": true,
+        "accessType": "BLOCK"
       }
     ],
     "customer": "example",

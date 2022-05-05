@@ -95,60 +95,76 @@ func TestMetricsPolicy_Post(t *testing.T) {
 	},
 		{
 			AccountIds:   []string{},
-			UserGroupIds: []string{id2},
+			UserGroupIds: []string{},
 			RoleIds:      []string{"abc123", "poi567"},
-			Name:         "Allow Some Metrics",
+			Name:         "BLOCK Some Metrics by role",
 			Tags:         []string{"Custom"},
-			Description:  "Scoped filter for some.",
-			Prefixes:     []string{"aa", "bb"},
+			Description:  "Scoped filter for roles.",
+			Prefixes:     []string{"aa.*", "bb.*"},
 			TagsAnded:    true,
-			AccessType:   "DENY",
-		}}})
+			AccessType:   "BLOCK",
+		},
+		{
+			AccountIds:   []string{id2},
+			UserGroupIds: []string{},
+			RoleIds:      []string{},
+			Name:         "Allow Some Metrics by accounts",
+			Tags:         []string{"Custom"},
+			Description:  "Scoped filter for users.",
+			Prefixes:     []string{"*"},
+			TagsAnded:    false,
+			AccessType:   "ALLOW",
+		},
+	}})
 
 	assert.Nil(t, err)
-	assert.Equal(t, 2, len(resp.PolicyRules))
-	//assert.Equal(t,resp)
-	//assert.Equal(t,resp)
-	//assert.Equal(t,resp)
-	//assert.Equal(t,resp)
-	//assert.Equal(t,resp)
-	assert.Equal(t, "example", resp.Customer)
-	assert.Equal(t, "john.doe@example.com", resp.UpdaterId)
-	assert.Equal(t, 2603766170831, resp.UpdatedEpochMillis)
-	// TODO test object equality with pointer usergroup
-	//assert.Equal(t, &MetricsPolicy{
-	//	PolicyRules: []PolicyRule{{
-	//		AccountIds: []string{},
-	//		UserGroups: []UserGroup{{
-	//			ID:          &id,
-	//			Name:        "Everyone",
-	//			Description: "System group which contains all users",
-	//		}},
-	//		RoleIds:       []string{},
-	//		Name:        "Allow All Metrics",
-	//		Tags:        []string{},
-	//		Description: "Predefined policy rule. Allows access to all metrics (timeseries, histograms, and counters) for all accounts. If this rule is removed, all accounts can access all metrics if there are no matching blocking rules.",
-	//		Prefixes:    []string{"*"},
-	//		TagsAnded:   true,
-	//		AccessType:  "ALLOW",
-	//	},
-	//		{
-	//			AccountIds: []string{},
-	//			UserGroups: []UserGroup{{
-	//				ID:          &id2,
-	//				Name:        "Some",
-	//				Description: "Custom selector",
-	//			}},
-	//			RoleIds:       []string{"abc123", "poi567"},
-	//			Name:        "Allow Some Metrics",
-	//			Tags:        []string{"Custom"},
-	//			Description: "Scoped filter for some.",
-	//			Prefixes:    []string{"aa", "bb"},
-	//			TagsAnded:   true,
-	//			AccessType:  "DENY",
-	//		}},
-	//	Customer:           "example",
-	//	UpdaterId:          "john.doe@example.com",
-	//	UpdatedEpochMillis: 2603766170831,
-	//}, resp)
+	assert.Equal(t, &MetricsPolicy{
+		PolicyRules: []PolicyRule{{
+			Accounts: []PolicyUser{},
+			UserGroups: []PolicyUserGroup{{
+				Name:        "Everyone",
+				ID:          id,
+				Description: "System group which contains all users",
+			}},
+			Roles:       []Role{},
+			Name:        "Allow All Metrics",
+			Tags:        []string{},
+			Description: "Predefined policy rule. Allows access to all metrics (timeseries, histograms, and counters) for all accounts. If this rule is removed, all accounts can access all metrics if there are no matching blocking rules.",
+			Prefixes:    []string{"*"},
+			TagsAnded:   false,
+			AccessType:  "ALLOW",
+		},
+			{
+				Accounts:   []PolicyUser{},
+				UserGroups: []PolicyUserGroup{},
+				Roles: []Role{
+					{Name: "test-role1", ID: "abc123", Description: "misc"},
+					{Name: "test-role2", ID: "poi567", Description: ""},
+				},
+				Name:        "BLOCK Some Metrics by role",
+				Tags:        []string{"Custom"},
+				Description: "Scoped filter for roles.",
+				Prefixes:    []string{"aa.*", "bb.*"},
+				TagsAnded:   true,
+				AccessType:  "BLOCK",
+			},
+			{
+				Accounts: []PolicyUser{
+					{ID: "test1@example.com", Name: "test1@example.com"},
+					{ID: "test2@example.com", Name: "test2@example.com"}},
+				UserGroups:  []PolicyUserGroup{},
+				Roles:       []Role{},
+				Name:        "Allow Some Metrics by account",
+				Tags:        []string{"Custom"},
+				Description: "Scoped filter for users.",
+				Prefixes:    []string{"*"},
+				TagsAnded:   true,
+				AccessType:  "BLOCK",
+			},
+		},
+		Customer:           "example",
+		UpdaterId:          "john.doe@example.com",
+		UpdatedEpochMillis: 2603766170831,
+	},
+		resp)
 }
