@@ -42,7 +42,10 @@
         ],
         "name": "BLOCK Some Metrics by role",
         "tags": [
-          "Custom"
+          {
+            "key": "Custom",
+            "value": "Value"
+          }
         ],
         "description": "Scoped filter for roles.",
         "prefixes": [
@@ -67,7 +70,10 @@
         "roles": [],
         "name": "Allow Some Metrics by account",
         "tags": [
-          "Custom"
+          {
+            "key": "env",
+            "value": "prod"
+          }
         ],
         "description": "Scoped filter for users.",
         "prefixes": [

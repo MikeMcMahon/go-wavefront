@@ -13,7 +13,7 @@ type PolicyRule struct {
 	UserGroups  []PolicyUserGroup `json:"userGroups,omitempty"`
 	Roles       []Role            `json:"roles,omitempty"`
 	Name        string            `json:"name,omitempty"`
-	Tags        []string          `json:"tags,omitempty"`
+	Tags        []PolicyTag       `json:"tags,omitempty"`
 	Description string            `json:"description,omitempty"`
 	Prefixes    []string          `json:"prefixes,omitempty"`
 	TagsAnded   bool              `json:"tagsAnded,omitempty"`
@@ -25,15 +25,20 @@ type UpdateMetricsPolicyRequest struct {
 }
 
 type PolicyRuleRequest struct {
-	AccountIds   []string `json:"accounts,omitempty"`
-	UserGroupIds []string `json:"userGroups,omitempty"`
-	RoleIds      []string `json:"roles,omitempty"`
-	Name         string   `json:"name,omitempty"`
-	Tags         []string `json:"tags,omitempty"`
-	Description  string   `json:"description,omitempty"`
-	Prefixes     []string `json:"prefixes,omitempty"`
-	TagsAnded    bool     `json:"tagsAnded,omitempty"`
-	AccessType   string   `json:"accessType,omitempty"`
+	AccountIds   []string    `json:"accounts,omitempty"`
+	UserGroupIds []string    `json:"userGroups,omitempty"`
+	RoleIds      []string    `json:"roles,omitempty"`
+	Name         string      `json:"name,omitempty"`
+	Tags         []PolicyTag `json:"tags,omitempty"`
+	Description  string      `json:"description,omitempty"`
+	Prefixes     []string    `json:"prefixes,omitempty"`
+	TagsAnded    bool        `json:"tagsAnded,omitempty"`
+	AccessType   string      `json:"accessType,omitempty"`
+}
+
+type PolicyTag struct {
+	Key   string `json:"key,omitempty"`
+	Value string `json:"value,omitempty"`
 }
 
 type PolicyUser struct {
