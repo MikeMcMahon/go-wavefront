@@ -14,12 +14,6 @@ type MockMetricsPolicyClient struct {
 	T *testing.T
 }
 
-type MockCrudMetricsPolicyClient struct {
-	Client
-	T      *testing.T
-	method string
-}
-
 func (m *MockMetricsPolicyClient) Do(req *http.Request) (io.ReadCloser, error) {
 	switch req.Method {
 	case "GET":
@@ -67,7 +61,7 @@ func TestMetricsPolicy_Get(t *testing.T) {
 	}, resp)
 }
 
-func TestMetricsPolicy_Post(t *testing.T) {
+func TestMetricsPolicy_Put(t *testing.T) {
 	baseurl, _ := url.Parse("http://testing.wavefront.com")
 	m := &MetricsPolicyAPI{
 		client: &MockMetricsPolicyClient{
