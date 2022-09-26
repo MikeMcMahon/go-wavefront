@@ -80,6 +80,7 @@ func TestAlerts_CreateUpdateDeleteAlert(t *testing.T) {
 		Severity:            "WARN",
 		AdditionalInfo:      "please resolve this alert",
 		Tags:                []string{"mytag1", "mytag2"},
+		ProcessRateMinutes:  2,
 	}
 
 	// Update should fail because no ID is set
@@ -129,6 +130,7 @@ func TestMultiThresholdAlerts_CreateUpdateDeleteAlert(t *testing.T) {
 		SeverityList:        []string{"SMOKE", "WARN"},
 		AdditionalInfo:      "please resolve this alert",
 		Tags:                []string{"mytag1", "mytag2"},
+		ProcessRateMinutes:  2,
 	}
 
 	// Update should fail because no ID is set

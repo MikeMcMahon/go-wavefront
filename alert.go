@@ -81,6 +81,8 @@ type Alert struct {
 
 	// Include obsolete metrics in alert query
 	IncludeObsoleteMetrics bool `json:"includeObsoleteMetrics,omitempty"`
+
+	ProcessRateMinutes int `json:"processRateMinutes"`
 }
 
 type SourceLabelPair struct {

@@ -33,6 +33,7 @@ func ExampleAlerts() {
 		ResolveAfterMinutes: 2,
 		Severity:            "WARN",
 		Tags:                []string{"dc1", "synergy"},
+		ProcessRateMinutes:  2,
 	}
 
 	// Create the alert on Wavefront
@@ -151,6 +152,7 @@ func ExampleAlerts() {
 		ResolveAfterMinutes: 2,
 		SeverityList:        []string{"SMOKE", "WARN"},
 		Tags:                []string{"dc1", "synergy"},
+		ProcessRateMinutes:  2,
 	}
 
 	// Create the thresold alert on Wavefront
