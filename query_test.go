@@ -44,12 +44,12 @@ func TestQuery(t *testing.T) {
 	// check correct default timewindow applied
 	end, _ := strconv.Atoi(q.Params.EndTime)
 	start, _ := strconv.Atoi(q.Params.StartTime)
-	if end-start != 3600 {
-		t.Errorf("query window, expected 3600, got %d", end-start)
+	if end-start != (3600 * 1000) {
+		t.Errorf("query window, expected 3600000, got %d", end-start)
 	}
 
 	q.SetEndTime(time.Now())
-	assert.NoError(q.SetStartTime(LastDay))
+	assert.NoError(q.SetStartTime(LastDay / 1000))
 	end, _ = strconv.Atoi(q.Params.EndTime)
 	start, _ = strconv.Atoi(q.Params.StartTime)
 	if end-start != LastDay {

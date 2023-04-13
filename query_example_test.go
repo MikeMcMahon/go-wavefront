@@ -28,7 +28,7 @@ func ExampleQuery() {
 	))
 
 	// Set the query period to be one day instead of one hour
-	err = query.SetStartTime(24 * 60 * 60)
+	err = query.SetStartTime(24 * 60 * 60 * 1000)
 	if err != nil {
 		log.Fatal(err)
 	}

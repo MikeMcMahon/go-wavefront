@@ -46,7 +46,7 @@ func TestEvents_Find(t *testing.T) {
 			T: t,
 		},
 	}
-	tr, _ := NewTimeRange(1498723080, LastHour)
+	tr, _ := NewTimeRange(1498723080, LastHour/1000)
 	events, err := e.Find(nil, tr)
 
 	if err != nil {
