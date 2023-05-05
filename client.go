@@ -25,7 +25,7 @@ type Wavefronter interface {
 	Do(req *http.Request) (io.ReadCloser, error)
 }
 
-// Config is used to hold configuration used when constructing a Client
+// Config is used to hold configuration, used when constructing a Client
 type Config struct {
 	// Address is the address of the Wavefront API, of the form
 	// example.wavefront.com or http://localhost:8080.
@@ -75,10 +75,11 @@ func NewClient(config *Config) (*Client, error) {
 		return nil, err
 	}
 
-	// need to disable http/2 as it doesn't play nicely with nginx
-	// to do so we set TLSNextProto to an empty, non-nil map
+	// need to disable http/2 as it doesn't play nicely with nginx.
+	// To disable, set TLSNextProto to an empty, non-nil map
 	configCopy := *config
-	c := &Client{Config: &configCopy,
+	c := &Client{
+		Config:  &configCopy,
 		BaseURL: baseURL,
 		httpClient: &http.Client{
 			Transport: &http.Transport{
@@ -333,14 +334,14 @@ func doParams(params map[string]string) doOption {
 // client is the client object.
 // options is a var arg list of options for the Rest API call:
 // To use myStruct as the payload of the REST call, pass doPayload(&myStruct);
-// To store the response of the REST call in result, pass doResponse(&result);
-func doRest(
-	method string,
-	url string,
-	client Wavefronter,
-	options ...doOption) (err error) {
+// To store the response of the REST call in the result, pass doResponse(&result);
+func doRest(method string, url string, client Wavefronter, options ...doOption) (err error) {
+
+	// Apply options to the settings object.
 	var settings doSettings
 	settings.applyOptions(options)
+
+	// Validate Payload
 	var payload []byte
 	if settings.payloadPtr != nil {
 		payload, err = json.Marshal(settings.payloadPtr)
@@ -348,6 +349,7 @@ func doRest(
 			return
 		}
 	}
+
 	var req *http.Request
 	if len(settings.params) == 0 {
 		req, err = client.NewRequest(method, url, nil, payload)
@@ -357,11 +359,13 @@ func doRest(
 	if err != nil {
 		return
 	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return
 	}
 	defer resp.Close()
+
 	if settings.responsePtr != nil {
 		decoder := json.NewDecoder(resp)
 		pointToZeroValue(settings.responsePtr)
@@ -380,7 +384,7 @@ func doRest(
 // assignment operator. The way to fix this is to set the struct to its zero
 // value before unmarshalling to it. Since the zero value has no allocated
 // slices or maps, the json library will allocate new slices and maps rather
-// than modifying existing ones in place which is what we need for the
+// than modifying existing ones in place, which is what we need for the
 // assignment operator to work as expected.
 func pointToZeroValue(ptr interface{}) {
 	if reflect.TypeOf(ptr).Kind() != reflect.Ptr {
@@ -392,16 +396,14 @@ func pointToZeroValue(ptr interface{}) {
 }
 
 // doSearch calls the search API
-// filter are the search conditions. typ is the type of resource to search for.
+// filter are the search conditions. type is the type of resource to search for.
 // For dashboards its "dashboard" It is what follows /api/v2/search.
 // client is the wavefront client. slicePtr is a pointer to a slice. The
 // results are appended to this slice.
-func doSearch(
-	filter []*SearchCondition,
-	typ string,
-	client Wavefronter,
-	slicePtr interface{}) error {
+func doSearch(filter []*SearchCondition, typ string, client Wavefronter, slicePtr interface{}) error {
+
 	resultValue := sliceValueFromP(slicePtr)
+
 	search := &Search{
 		client: client,
 		Type:   typ,
@@ -409,21 +411,26 @@ func doSearch(
 			Conditions: filter,
 		},
 	}
+
 	moreItems := true
 	for moreItems {
 		resp, err := search.Execute()
 		if err != nil {
 			return err
 		}
+
 		pageValuePtr := reflect.New(resultValue.Type())
 		err = json.Unmarshal(resp.Response.Items, pageValuePtr.Interface())
 		if err != nil {
 			return err
 		}
+
 		resultValue.Set(reflect.AppendSlice(resultValue, pageValuePtr.Elem()))
+
 		moreItems = resp.Response.MoreItems
 		search.Params.Offset = resp.NextOffset
 	}
+
 	return nil
 }
 
