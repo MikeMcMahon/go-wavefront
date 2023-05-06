@@ -396,7 +396,7 @@ func pointToZeroValue(ptr interface{}) {
 }
 
 // doSearch calls the search API
-// filter are the search conditions. type is the type of resource to search for.
+// filter are the search conditions. typ is the type of resource to search for.
 // For dashboards its "dashboard" It is what follows /api/v2/search.
 // client is the wavefront client. slicePtr is a pointer to a slice. The
 // results are appended to this slice.

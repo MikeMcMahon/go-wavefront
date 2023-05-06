@@ -11,14 +11,14 @@ const (
 // ServiceAccount represents a ServiceAccount which exists in Wavefront. Note that here, roles,
 // groups, tokens and the ingestion policy are embedded structs.
 type ServiceAccount struct {
-	ID              string          `json:"identifier"`
-	Description     string          `json:"description"`
-	Permissions     []string        `json:"groups"`
-	Active          bool            `json:"active"`
-	Roles           []Role          `json:"roles"`
-	UserGroups      []UserGroup     `json:"userGroups"`
-	Tokens          []Token         `json:"tokens"`
-	IngestionPolicy IngestionPolicy `json:"ingestionPolicy"`
+	ID              string                  `json:"identifier"`
+	Description     string                  `json:"description"`
+	Permissions     []string                `json:"groups"`
+	Active          bool                    `json:"active"`
+	Roles           []Role                  `json:"roles"`
+	UserGroups      []UserGroup             `json:"userGroups"`
+	Tokens          []Token                 `json:"tokens"`
+	IngestionPolicy IngestionPolicyResponse `json:"ingestionPolicy"`
 }
 
 // TokenIds returns the Ids of the tokens in this instance.

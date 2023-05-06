@@ -22,25 +22,32 @@ func ExampleIngestionPolicies() {
 
 	ingestionPolicies := client.IngestionPolicies()
 
-	policy := &wavefront.IngestionPolicy{
+	policyRequest := &wavefront.IngestionPolicyRequest{
 		Name:        "test ingestion policy",
 		Description: "an ingestion policy created by the Go SDK test suite",
 		Scope:       "ACCOUNT",
+		Accounts:    []string{"user@example.com"},
 	}
 
-	err = ingestionPolicies.Create(policy)
+	ingestionPolicy, err := ingestionPolicies.Create(policyRequest)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// The ID field is now set, so we can update/delete the policy
-	fmt.Println("policy ID is", policy.ID)
+	fmt.Println("policy ID is", ingestionPolicy.ID)
+
+	ingestionPolicy, err = ingestionPolicies.GetByID(ingestionPolicy.ID)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Change the description
-	policy.Description = "an ingestion policy updated by the Go SDK test suite"
+	ingestionPolicy.Description = "an ingestion policy updated by the Go SDK test suite"
 
-	err = ingestionPolicies.Update(policy)
+	err = ingestionPolicies.Update(ingestionPolicy)
 
 	if err != nil {
 		log.Fatal(err)
@@ -48,7 +55,7 @@ func ExampleIngestionPolicies() {
 
 	time.Sleep(time.Second * 60)
 
-	err = ingestionPolicies.Delete(policy)
+	err = ingestionPolicies.DeleteByID(ingestionPolicy.ID)
 
 	if err != nil {
 		log.Fatal(err)
