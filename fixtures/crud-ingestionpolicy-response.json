@@ -4,15 +4,486 @@
     "message": "",
     "code": 200
   },
-  "response":       {
-    "sampledUserAccounts": [],
-    "userAccountCount": 0,
-    "sampledServiceAccounts": [],
-    "serviceAccountCount": 0,
-    "name": "newname",
-    "id": "test-policy-1607616352537",
-    "customer": "test",
-    "lastUpdatedMs": 1607694702333,
-    "lastUpdatedAccountId": "example@wavefront.com"
+  "response": {
+    "accounts": [
+      {
+        "name": "string",
+        "id": "string",
+        "description": "string"
+      }
+    ],
+    "groups": [
+      {
+        "name": "string",
+        "id": "string",
+        "description": "string"
+      }
+    ],
+    "metadata": {
+      "customer": "string",
+      "ingestionPolicyId": "string",
+      "usageInBillingPeriod": 0
+    },
+    "name": "fixture-policy",
+    "id": "fixture-policy-id",
+    "description": "string",
+    "scope": "ACCOUNT",
+    "customer": "fixture-policy-customer",
+    "alert": {
+      "tagpaths": [
+        "string"
+      ],
+      "targetEndpoints": [
+        "string"
+      ],
+      "modifyAclAccess": true,
+      "lastEventTime": 0,
+      "hidden": true,
+      "severity": "INFO",
+      "minutes": 0,
+      "name": "string",
+      "id": "string",
+      "target": "string",
+      "targetInfo": [
+        {
+          "method": "EMAIL",
+          "id": "string",
+          "name": "string"
+        }
+      ],
+      "failingHostLabelPairLinks": [
+        "string"
+      ],
+      "querySyntaxError": true,
+      "sortAttr": 0,
+      "severityList": [
+        "INFO"
+      ],
+      "alertChartUnits": "string",
+      "alertChartBase": 0,
+      "alertChartDescription": "string",
+      "service": [
+        "string"
+      ],
+      "application": [
+        "string"
+      ],
+      "tags": {
+        "customerTags": [
+          "string"
+        ]
+      },
+      "status": [
+        "string"
+      ],
+      "event": {
+        "computedHlps": [
+          {
+            "severity": "INFO",
+            "host": "string",
+            "startTime": 0,
+            "label": "string",
+            "tags": {
+              "additionalProp1": "string",
+              "additionalProp2": "string",
+              "additionalProp3": "string"
+            },
+            "firing": 0,
+            "observed": 0
+          }
+        ],
+        "table": "string",
+        "dimensions": {
+          "additionalProp1": [
+            "string"
+          ],
+          "additionalProp2": [
+            "string"
+          ],
+          "additionalProp3": [
+            "string"
+          ]
+        },
+        "name": "string",
+        "annotations": {
+          "additionalProp1": "string",
+          "additionalProp2": "string",
+          "additionalProp3": "string"
+        },
+        "id": "string",
+        "endTime": 0,
+        "startTime": 0,
+        "tags": [
+          "string"
+        ],
+        "runningState": "ONGOING",
+        "metricsUsed": [
+          "string"
+        ],
+        "createdAt": 0,
+        "hosts": [
+          "string"
+        ],
+        "summarizedEvents": 0,
+        "alertTags": [
+          "string"
+        ],
+        "isUserEvent": true,
+        "isEphemeral": true,
+        "creatorId": "string",
+        "updaterId": "string",
+        "updatedAt": 0,
+        "createdEpochMillis": 0,
+        "updatedEpochMillis": 0,
+        "canDelete": true,
+        "canClose": true,
+        "creatorType": [
+          "USER"
+        ]
+      },
+      "processRateMinutes": 0,
+      "systemOwned": true,
+      "acl": {
+        "canView": [
+          "string"
+        ],
+        "canModify": [
+          "string"
+        ]
+      },
+      "created": 0,
+      "createUserId": "string",
+      "updated": 0,
+      "updateUserId": "string",
+      "queryFailing": true,
+      "lastFailedTime": 0,
+      "lastErrorMessage": "string",
+      "additionalInformation": "string",
+      "metricsUsed": [
+        "string"
+      ],
+      "hostsUsed": [
+        "string"
+      ],
+      "inTrash": true,
+      "lastProcessedMillis": 0,
+      "pointsScannedAtLastQuery": 0,
+      "includeObsoleteMetrics": true,
+      "lastQueryTime": 0,
+      "condition": "string",
+      "conditionQueryType": "WQL",
+      "conditionQBEnabled": true,
+      "conditionQBSerialization": "string",
+      "creatorId": "string",
+      "updaterId": "string",
+      "displayExpression": "string",
+      "conditions": {
+        "additionalProp1": "string",
+        "additionalProp2": "string",
+        "additionalProp3": "string"
+      },
+      "displayExpressionQueryType": "WQL",
+      "displayExpressionQBEnabled": true,
+      "displayExpressionQBSerialization": "string",
+      "alertSources": [
+        {
+          "hidden": true,
+          "color": "string",
+          "name": "string",
+          "query": "string",
+          "description": "string",
+          "queryType": "WQL",
+          "queryBuilderEnabled": true,
+          "queryBuilderSerialization": "string",
+          "alertSourceType": [
+            "VARIABLE"
+          ]
+        }
+      ],
+      "resolveAfterMinutes": 0,
+      "targets": {
+        "additionalProp1": "string",
+        "additionalProp2": "string",
+        "additionalProp3": "string"
+      },
+      "snoozed": 0,
+      "failingHostLabelPairs": [
+        {
+          "severity": "INFO",
+          "host": "string",
+          "startTime": 0,
+          "label": "string",
+          "tags": {
+            "additionalProp1": "string",
+            "additionalProp2": "string",
+            "additionalProp3": "string"
+          },
+          "firing": 0,
+          "observed": 0
+        }
+      ],
+      "runbookLinks": [
+        "string"
+      ],
+      "triageDashboards": [
+        {
+          "dashboardId": "string",
+          "parameters": {
+            "additionalProp1": "string",
+            "additionalProp2": "string",
+            "additionalProp3": "string"
+          },
+          "description": "string"
+        }
+      ],
+      "alertTriageDashboards": [
+        {
+          "dashboardId": "string",
+          "parameters": {
+            "additionalProp1": {
+              "additionalProp1": "string",
+              "additionalProp2": "string",
+              "additionalProp3": "string"
+            },
+            "additionalProp2": {
+              "additionalProp1": "string",
+              "additionalProp2": "string",
+              "additionalProp3": "string"
+            },
+            "additionalProp3": {
+              "additionalProp1": "string",
+              "additionalProp2": "string",
+              "additionalProp3": "string"
+            }
+          },
+          "description": "string"
+        }
+      ],
+      "inMaintenanceHostLabelPairs": [
+        {
+          "severity": "INFO",
+          "host": "string",
+          "startTime": 0,
+          "label": "string",
+          "tags": {
+            "additionalProp1": "string",
+            "additionalProp2": "string",
+            "additionalProp3": "string"
+          },
+          "firing": 0,
+          "observed": 0
+        }
+      ],
+      "activeMaintenanceWindows": [
+        "string"
+      ],
+      "prefiringHostLabelPairs": [
+        {
+          "severity": "INFO",
+          "host": "string",
+          "startTime": 0,
+          "label": "string",
+          "tags": {
+            "additionalProp1": "string",
+            "additionalProp2": "string",
+            "additionalProp3": "string"
+          },
+          "firing": 0,
+          "observed": 0
+        }
+      ],
+      "notificants": [
+        "string"
+      ],
+      "lastNotificationMillis": 0,
+      "notificationResendFrequencyMinutes": 0,
+      "alertsLastDay": 0,
+      "alertsLastWeek": 0,
+      "alertsLastMonth": 0,
+      "numPointsInFailureFrame": 0,
+      "noDataEvent": {
+        "computedHlps": [
+          {
+            "severity": "INFO",
+            "host": "string",
+            "startTime": 0,
+            "label": "string",
+            "tags": {
+              "additionalProp1": "string",
+              "additionalProp2": "string",
+              "additionalProp3": "string"
+            },
+            "firing": 0,
+            "observed": 0
+          }
+        ],
+        "table": "string",
+        "dimensions": {
+          "additionalProp1": [
+            "string"
+          ],
+          "additionalProp2": [
+            "string"
+          ],
+          "additionalProp3": [
+            "string"
+          ]
+        },
+        "name": "string",
+        "annotations": {
+          "additionalProp1": "string",
+          "additionalProp2": "string",
+          "additionalProp3": "string"
+        },
+        "id": "string",
+        "endTime": 0,
+        "startTime": 0,
+        "tags": [
+          "string"
+        ],
+        "runningState": "ONGOING",
+        "metricsUsed": [
+          "string"
+        ],
+        "createdAt": 0,
+        "hosts": [
+          "string"
+        ],
+        "summarizedEvents": 0,
+        "alertTags": [
+          "string"
+        ],
+        "isUserEvent": true,
+        "isEphemeral": true,
+        "creatorId": "string",
+        "updaterId": "string",
+        "updatedAt": 0,
+        "createdEpochMillis": 0,
+        "updatedEpochMillis": 0,
+        "canDelete": true,
+        "canClose": true,
+        "creatorType": [
+          "USER"
+        ]
+      },
+      "systemAlertVersion": 0,
+      "alertType": "CLASSIC",
+      "evaluateRealtimeData": true,
+      "secureMetricDetails": true,
+      "enablePDIncidentBySeries": true,
+      "chartSettings": {
+        "type": "line",
+        "min": 0,
+        "max": 0,
+        "expectedDataSpacing": 0,
+        "fixedLegendEnabled": true,
+        "fixedLegendUseRawStats": true,
+        "customTags": [
+          "string"
+        ],
+        "plainMarkdownContent": "string",
+        "lineType": "linear",
+        "fixedLegendHideLabel": true,
+        "xmax": 0,
+        "xmin": 0,
+        "ymax": 0,
+        "ymin": 0,
+        "timeBasedColoring": true,
+        "sparklineDisplayValueType": "VALUE",
+        "sparklineDisplayColor": "string",
+        "sparklineDisplayVerticalPosition": "string",
+        "sparklineDisplayHorizontalPosition": "MIDDLE",
+        "sparklineDisplayFontSize": "string",
+        "sparklineDisplayPrefix": "string",
+        "sparklineDisplayPostfix": "string",
+        "sparklineSize": "BACKGROUND",
+        "sparklineLineColor": "string",
+        "sparklineFillColor": "string",
+        "sparklineValueColorMapColors": [
+          "string"
+        ],
+        "sparklineValueColorMapValuesV2": [
+          0
+        ],
+        "sparklineValueColorMapValues": [
+          0
+        ],
+        "sparklineValueColorMapApplyTo": "TEXT",
+        "sparklineDecimalPrecision": 0,
+        "sparklineValueTextMapText": [
+          "string"
+        ],
+        "sparklineValueTextMapThresholds": [
+          0
+        ],
+        "chartDefaultColor": "string",
+        "logsTable": {
+          "sort": {
+            "order": "string",
+            "sort": "string"
+          },
+          "columns": [
+            "string"
+          ],
+          "linesToShow": "string",
+          "autoLoad": true
+        },
+        "stackType": "zero",
+        "windowing": "full",
+        "windowSize": 0,
+        "showHosts": true,
+        "showLabels": true,
+        "showRawValues": true,
+        "showValueColumn": true,
+        "autoColumnTags": true,
+        "columnTags": "string",
+        "tagMode": "all",
+        "numTags": 0,
+        "groupBySource": true,
+        "sortValuesDescending": true,
+        "defaultSortColumn": "string",
+        "y1Max": 0,
+        "y1Min": 0,
+        "y1Units": "string",
+        "y0ScaleSIBy1024": true,
+        "y1ScaleSIBy1024": true,
+        "y0UnitAutoscaling": true,
+        "y1UnitAutoscaling": true,
+        "invertDynamicLegendHoverControl": true,
+        "fixedLegendPosition": "RIGHT",
+        "fixedLegendDisplayStats": [
+          "string"
+        ],
+        "fixedLegendFilterSort": "TOP",
+        "fixedLegendShowSourceName": true,
+        "fixedLegendShowMetricName": true,
+        "fixedLegendFilterLimit": 0,
+        "fixedLegendFilterField": "CURRENT"
+      },
+      "chartAttributes": {},
+      "ingestionPolicyId": "string",
+      "orphan": true,
+      "createdEpochMillis": 0,
+      "updatedEpochMillis": 0,
+      "deleted": true
+    },
+    "lastUpdatedMs": 0,
+    "lastUpdatedAccountId": "string",
+    "sources": [
+      "string"
+    ],
+    "pointTags": [
+      {
+        "key": "string",
+        "value": "string"
+      }
+    ],
+    "tagsAnded": true,
+    "alertId": "string",
+    "isLimited": true,
+    "limitPPS": 0,
+    "namespaces": [
+      "string"
+    ]
   }
 }
