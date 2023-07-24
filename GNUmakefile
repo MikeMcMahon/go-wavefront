@@ -23,6 +23,9 @@ test: fmtcheck
 testacc: fmtcheck
 	go test $(TEST) -v $(TESTARGS) -timeout=120s -run "TestAcc"
 
+tidy:
+	go mod tidy
+
 vet:
 	@echo "go vet ."
 	@go vet $$(go list ./... | grep -v vendor/) ; if [ $$? -eq 1 ]; then \
@@ -32,4 +35,4 @@ vet:
 		exit 1; \
 	fi
 
-.PHONY: build fmt fmtcheck lint test testacc vet
+.PHONY: build fmt fmtcheck lint test testacc tidy vet
