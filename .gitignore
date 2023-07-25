@@ -6,3 +6,6 @@ vendor/*/
 
 # Vim swap files
 .*.swp
+
+# direnv config.
+.envrc

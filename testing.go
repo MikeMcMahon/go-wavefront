@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-// Helps expedite the boiler plate code for testing client requests
+// Helps expedite the boilerplate code for testing client requests
 // iface is the destination type we need marshal data into from the request
 // iface can be utilized to ensure the request body is properly being marshalled and values are set as expected
 func testDo(t *testing.T, req *http.Request, fixture, method string, iface interface{}) (io.ReadCloser, error) {
@@ -32,7 +32,7 @@ func testDo(t *testing.T, req *http.Request, fixture, method string, iface inter
 	return ioutil.NopCloser(bytes.NewReader(response)), nil
 }
 
-// Helps expedite the boiler plate code for testing client requests against paginated results
+// Helps expedite the boilerplate code for testing client requests against paginated results
 // tMarshal is the destination type we need marshal data into from the response body of the fixture
 func testPaginatedDo(t *testing.T, req *http.Request, fixture string, invokedCount *int) (io.ReadCloser, error) {
 	search := SearchParams{}

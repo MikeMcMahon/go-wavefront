@@ -89,7 +89,7 @@ func (m *MaintenanceWindows) Find(filter []*SearchCondition) (
 
 // GetByID returns the MaintenanceWindow with given ID. If no such
 // MaintenanceWindow exists, GetByID returns an error. The caller can call
-// NotFound on err to determine whether or not the error is because the
+// NotFound on err to determine whether the error is because the
 // MaintenanceWindow doesn't exist.
 func (m *MaintenanceWindows) GetByID(id string) (
 	maintenanceWindow *MaintenanceWindow, err error) {

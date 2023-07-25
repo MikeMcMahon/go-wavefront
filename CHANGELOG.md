@@ -1,6 +1,19 @@
 # Changelog
 
 Changelog for go-wavefront-management-api.
+## [2.0.0]
+
+Breaking Change:
+- The Ingestion Policies' API changed on Wavefront servers, breaking the functionality in the CLI.
+
+Fix:
+- Adds support for the new Ingestion Policy interface.
+
+Enhancement:
+- Add more testing to Ingestion Policies.
+- Update go dependencies.
+- Modernize GitHub actions.
+
 ## [1.16.0]
 
 * Add support for Scope field in Ingestion Policy
