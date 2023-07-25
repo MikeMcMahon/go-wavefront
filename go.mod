@@ -1,4 +1,4 @@
-module github.com/WavefrontHQ/go-wavefront-management-api
+module github.com/WavefrontHQ/go-wavefront-management-api/v2
 
 go 1.18
 
