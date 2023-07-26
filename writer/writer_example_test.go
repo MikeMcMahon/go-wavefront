@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	wavefront "github.com/WavefrontHQ/go-wavefront-management-api/writer"
+	wavefront "github.com/WavefrontHQ/go-wavefront-management-api/v2/writer"
 )
 
 func ExampleWriter() {

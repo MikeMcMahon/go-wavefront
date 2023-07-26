@@ -2,7 +2,7 @@ package wavefront_test
 
 import (
 	"fmt"
-	"github.com/WavefrontHQ/go-wavefront-management-api"
+	"github.com/WavefrontHQ/go-wavefront-management-api/v2"
 	"io/ioutil"
 	"log"
 )

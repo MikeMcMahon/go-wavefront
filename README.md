@@ -18,7 +18,7 @@ import (
     "log"
     "os"
 
-    wavefront "github.com/WavefrontHQ/go-wavefront-management-api"
+    wavefront "github.com/WavefrontHQ/go-wavefront-management-api/v2"
 )
 
 func main() {
@@ -61,7 +61,7 @@ import (
     "log"
     "os"
 
-    wavefront "github.com/WavefrontHQ/go-wavefront-management-api/writer"
+    wavefront "github.com/WavefrontHQ/go-wavefront-management-api/v2/writer"
 )
 
 func main() {

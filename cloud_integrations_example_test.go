@@ -3,7 +3,7 @@ package wavefront_test
 import (
 	"log"
 
-	"github.com/WavefrontHQ/go-wavefront-management-api"
+	"github.com/WavefrontHQ/go-wavefront-management-api/v2"
 )
 
 func ExampleCloudIntegrations() {
