@@ -135,7 +135,7 @@ type Chart struct {
 	NoDefaultEvents bool `json:"noDefaultEvents"`
 
 	// Strategy to use when aggregating metric points (LAST, AVERAGE, COUNT, etc)
-	Summarization string `json:"summarization"`
+	Summarization string `json:"summarization,omitempty"`
 
 	// Sources is an Array of Source
 	Sources []Source `json:"sources"`

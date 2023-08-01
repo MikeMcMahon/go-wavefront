@@ -1,6 +1,15 @@
 # Changelog
 
 Changelog for go-wavefront-management-api.
+
+## [2.1.0]
+
+- Dashboard object to omit chart `summarization` field when empty.
+  - Helps prevent the following API error when it is not included in the JSON body:
+      ```text
+      Cannot deserialize value of type `sunnylabs.query.SummarizationStrategy` from String \"\":  was not one of [MEAN, MEDIAN, MIN, MAX, SUM, COUNT, LAST, FIRST, ANOMALOUS]
+      ```
+
 ## [2.0.0]
 
 Breaking Change:
