@@ -125,10 +125,10 @@ type Chart struct {
 	// Base (unknown usage, defaults to 1)
 	Base int `json:"base"`
 
-	// Include obsolete metrics older than 4 weeks ago into current time window
+	// Include obsolete metrics older than 4 weeks ago into the current time window
 	IncludeObsoleteMetrics bool `json:"includeObsoleteMetrics"`
 
-	// Interpolate points that existed in past/future into current time window
+	// Interpolate points that existed in the past /future into the current time window
 	InterpolatePoints bool `json:"interpolatePoints"`
 
 	// Don't include default events on the chart
@@ -140,13 +140,13 @@ type Chart struct {
 	// Sources is an Array of Source
 	Sources []Source `json:"sources"`
 
-	// Units are the units to use for the y axis
+	// Units are the units to use for the y-axis
 	Units string `json:"units,omitempty"`
 
 	// ChartSettings are custom settings for the chart
 	ChartSettings ChartSetting `json:"chartSettings"`
 
-	// ChartAttributes is arbitrary JSON used to configure chart attributes
+	// ChartAttributes is arbitrary JSON used to configure a chart's attributes
 	ChartAttributes json.RawMessage `json:"chartAttributes,omitempty"`
 }
 
@@ -246,7 +246,7 @@ type Dashboards struct {
 
 const baseDashboardPath = "/api/v2/dashboard"
 
-// UnmarshalJSON is a custom JSON unmarshaller for an Dashboard, used in order to
+// UnmarshalJSON is a custom JSON unmarshaller for a Dashboard, used to
 // populate the Tags field in a more intuitive fashion
 func (d *Dashboard) UnmarshalJSON(b []byte) error {
 	type tags struct {
