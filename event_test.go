@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 	"time"
 
@@ -61,7 +61,7 @@ func TestEvents_Find(t *testing.T) {
 }
 
 func (m *MockCrudEventClient) Do(req *http.Request) (io.ReadCloser, error) {
-	response, err := ioutil.ReadFile("./fixtures/create-event-response.json")
+	response, err := os.ReadFile("./fixtures/create-event-response.json")
 	if err != nil {
 		m.T.Fatal(err)
 	}
@@ -69,14 +69,14 @@ func (m *MockCrudEventClient) Do(req *http.Request) (io.ReadCloser, error) {
 		m.T.Errorf("request method expected '%s' got '%s'", m.method, req.Method)
 	}
 	if req.Body != nil {
-		body, _ := ioutil.ReadAll(req.Body)
+		body, _ := io.ReadAll(req.Body)
 		event := Event{}
 		err = json.Unmarshal(body, &event)
 		if err != nil {
 			m.T.Fatal(err)
 		}
 	}
-	return ioutil.NopCloser(bytes.NewReader(response)), nil
+	return io.NopCloser(bytes.NewReader(response)), nil
 }
 
 func TestEvents_CreateUpdateDeleteEvent(t *testing.T) {

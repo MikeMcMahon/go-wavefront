@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"time"
 )
 
@@ -153,7 +153,7 @@ func (s *Search) Execute() (*SearchResponse, error) {
 	}
 	defer resp.Close()
 
-	body, err := ioutil.ReadAll(resp)
+	body, err := io.ReadAll(resp)
 	if err != nil {
 		return nil, err
 	}

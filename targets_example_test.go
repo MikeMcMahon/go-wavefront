@@ -1,8 +1,8 @@
 package wavefront_test
 
 import (
-	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/WavefrontHQ/go-wavefront-management-api/v2"
 )
@@ -22,7 +22,7 @@ func ExampleTargets() {
 
 	targets := client.Targets()
 
-	tmpl, _ := ioutil.ReadFile("./target-template.tmpl")
+	tmpl, _ := os.ReadFile("./target-template.tmpl")
 
 	target := wavefront.Target{
 		Title:       "test target",

@@ -3,8 +3,8 @@ package wavefront_test
 import (
 	"fmt"
 	"github.com/WavefrontHQ/go-wavefront-management-api/v2"
-	"io/ioutil"
 	"log"
+	"os"
 )
 
 func ExampleAlerts() {
@@ -75,7 +75,7 @@ func ExampleAlerts() {
 	// Threshold Alerts only accept custom alert targets
 	// Create Alert Targets that can be used for the example
 
-	tmpl, _ := ioutil.ReadFile("./target-template.tmpl")
+	tmpl, _ := os.ReadFile("./target-template.tmpl")
 	targetA := wavefront.Target{
 		Title:       "test target",
 		Description: "testing something A",

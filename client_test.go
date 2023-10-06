@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -66,7 +65,7 @@ func TestClientGet(t *testing.T) {
 	if err != nil {
 		t.Fatal("error executing request:", err)
 	}
-	output, _ := ioutil.ReadAll(resp)
+	output, _ := io.ReadAll(resp)
 	fmt.Println(string(output))
 }
 
@@ -103,7 +102,7 @@ func TestClientPost(t *testing.T) {
 			t.Errorf("no Content-Type header set")
 		}
 
-		actualBody, _ := ioutil.ReadAll(r.Body)
+		actualBody, _ := io.ReadAll(r.Body)
 		// The request body is buffered since we need to replay it on failure
 		// this means the first read will fire this function above with an empty body (because we read it)
 		if string(actualBody) != "" {
@@ -141,7 +140,7 @@ func TestClientPost(t *testing.T) {
 	if err != nil {
 		t.Fatal("error executing request:", err)
 	}
-	output, _ := ioutil.ReadAll(resp)
+	output, _ := io.ReadAll(resp)
 	fmt.Println(string(output))
 }
 
@@ -183,7 +182,7 @@ func (f *fakeWavefronter) Do(_ *http.Request) (io.ReadCloser, error) {
 	if f.doError != nil {
 		return nil, f.doError
 	}
-	result := ioutil.NopCloser(strings.NewReader(f.response))
+	result := io.NopCloser(strings.NewReader(f.response))
 	return result, nil
 }
 

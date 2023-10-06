@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -15,13 +15,13 @@ import (
 // iface is the destination type we need marshal data into from the request
 // iface can be utilized to ensure the request body is properly being marshalled and values are set as expected
 func testDo(t *testing.T, req *http.Request, fixture, method string, iface interface{}) (io.ReadCloser, error) {
-	response, err := ioutil.ReadFile(fixture)
+	response, err := os.ReadFile(fixture)
 	if err != nil {
 		t.Fatal(err)
 	}
 	assertEqual(t, method, req.Method)
 	if req.Body != nil {
-		body, _ := ioutil.ReadAll(req.Body)
+		body, _ := io.ReadAll(req.Body)
 		err = json.Unmarshal(body, iface)
 		if err != nil {
 			t.Fatal(err)
@@ -29,7 +29,7 @@ func testDo(t *testing.T, req *http.Request, fixture, method string, iface inter
 	} else {
 		t.Log("Request body was nil, if this is expected please ignore...")
 	}
-	return ioutil.NopCloser(bytes.NewReader(response)), nil
+	return io.NopCloser(bytes.NewReader(response)), nil
 }
 
 // Helps expedite the boilerplate code for testing client requests against paginated results

@@ -2,9 +2,9 @@ package wavefront
 
 import (
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 
 	asserts "github.com/stretchr/testify/assert"
@@ -67,7 +67,7 @@ func TestTargets_CreateUpdateDeleteTarget(t *testing.T) {
 		},
 	}
 
-	tmpl, _ := ioutil.ReadFile("./target-template.tmpl")
+	tmpl, _ := os.ReadFile("./target-template.tmpl")
 
 	target := Target{
 		Title:       "test target",

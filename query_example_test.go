@@ -2,7 +2,7 @@ package wavefront_test
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 
 	"github.com/WavefrontHQ/go-wavefront-management-api/v2"
@@ -41,7 +41,7 @@ func ExampleQuery() {
 
 	// The raw JSON response is available as RawResponse.
 	// This can be useful for debugging
-	b, _ := ioutil.ReadAll(result.RawResponse)
+	b, _ := io.ReadAll(result.RawResponse)
 	fmt.Println(string(b))
 
 	// The timeseries response can now be used to explore the results

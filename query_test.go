@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"testing"
 	"time"
@@ -21,7 +21,7 @@ type MockWavefrontClient struct {
 }
 
 func (m MockWavefrontClient) Do(req *http.Request) (io.ReadCloser, error) {
-	return ioutil.NopCloser(bytes.NewReader(m.Response)), nil
+	return io.NopCloser(bytes.NewReader(m.Response)), nil
 }
 
 func TestQuery(t *testing.T) {
@@ -61,7 +61,7 @@ func TestQuery(t *testing.T) {
 		t.Fatal("error executing query:", err)
 	}
 
-	raw, err := ioutil.ReadAll(resp.RawResponse)
+	raw, err := io.ReadAll(resp.RawResponse)
 	if err != nil {
 		t.Error(err)
 	}
@@ -74,7 +74,7 @@ func TestQuery(t *testing.T) {
 
 func getQueryOutputFromFixture(fixture string) (*QueryResponse, error) {
 	baseurl, _ := url.Parse("http://testing.wavefront.com")
-	response, err := ioutil.ReadFile(fixture)
+	response, err := os.ReadFile(fixture)
 	if err != nil {
 		return nil, err
 	}

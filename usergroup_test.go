@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 )
 
@@ -49,7 +49,7 @@ func TestUserGroups_Find(t *testing.T) {
 }
 
 func (m *MockCrudUserGroupClient) Do(req *http.Request) (io.ReadCloser, error) {
-	resp, err := ioutil.ReadFile("./fixtures/crud-usergroup-response.json")
+	resp, err := os.ReadFile("./fixtures/crud-usergroup-response.json")
 	if err != nil {
 		m.T.Fatal(err)
 	}
@@ -59,13 +59,13 @@ func (m *MockCrudUserGroupClient) Do(req *http.Request) (io.ReadCloser, error) {
 	}
 
 	if req.Body != nil {
-		body, _ := ioutil.ReadAll(req.Body)
+		body, _ := io.ReadAll(req.Body)
 
 		// The calls for adding/removing users only transmit an array of strings
 		// Not an actual UserGroup object.
 		var addRemoveBody []string
 		if err := json.Unmarshal(body, &addRemoveBody); err == nil {
-			return ioutil.NopCloser(bytes.NewReader(resp)), nil
+			return io.NopCloser(bytes.NewReader(resp)), nil
 		}
 
 		userGroup := UserGroup{}
@@ -75,7 +75,7 @@ func (m *MockCrudUserGroupClient) Do(req *http.Request) (io.ReadCloser, error) {
 		}
 	}
 
-	return ioutil.NopCloser(bytes.NewReader(resp)), nil
+	return io.NopCloser(bytes.NewReader(resp)), nil
 }
 
 func Test_CreatReadUpdateDelete(t *testing.T) {

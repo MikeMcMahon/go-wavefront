@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"testing"
 
 	asserts "github.com/stretchr/testify/assert"
@@ -21,7 +21,7 @@ type MockSearchClient struct {
 
 func (m MockSearchClient) Do(req *http.Request) (io.ReadCloser, error) {
 	p := SearchParams{}
-	b, _ := ioutil.ReadAll(req.Body)
+	b, _ := io.ReadAll(req.Body)
 	err := json.Unmarshal(b, &p)
 	if err != nil {
 		m.T.Fatal(err)
@@ -35,13 +35,13 @@ func (m MockSearchClient) Do(req *http.Request) (io.ReadCloser, error) {
 		m.T.Errorf("deleted search path expected /api/v2/search/alert/deleted, got %s", req.URL.Path)
 	}
 
-	return ioutil.NopCloser(bytes.NewReader(m.Response)), nil
+	return io.NopCloser(bytes.NewReader(m.Response)), nil
 }
 
 func TestDefensiveCopy(t *testing.T) {
 	assert := asserts.New(t)
 	baseurl, _ := url.Parse("http://testing.wavefront.com")
-	response, err := ioutil.ReadFile("./fixtures/search-alert-response.json")
+	response, err := os.ReadFile("./fixtures/search-alert-response.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -88,7 +88,7 @@ func TestSearch(t *testing.T) {
 	sp := &SearchParams{
 		Conditions: []*SearchCondition{sc},
 	}
-	response, err := ioutil.ReadFile("./fixtures/search-alert-response.json")
+	response, err := os.ReadFile("./fixtures/search-alert-response.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -113,7 +113,7 @@ func TestSearch(t *testing.T) {
 		t.Fatal("error executing query:", err)
 	}
 
-	raw, err := ioutil.ReadAll(resp.RawResponse)
+	raw, err := io.ReadAll(resp.RawResponse)
 	if err != nil {
 		t.Error(err)
 	}

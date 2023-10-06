@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"reflect"
 	"strconv"
 	"time"
@@ -110,7 +110,7 @@ const (
 )
 
 // NewQueryParams takes a query string and returns a set of QueryParams with
-// a query window of one hour since now and a set of sensible default vakues
+// a query window of one hour since now and a set of sensible default values
 func NewQueryParams(query string) *QueryParams {
 	endTime := time.Now().Unix()
 	startTime := endTime - LastHour
@@ -173,7 +173,7 @@ func (q *Query) Execute() (*QueryResponse, error) {
 	}
 	defer resp.Close()
 
-	body, err := ioutil.ReadAll(resp)
+	body, err := io.ReadAll(resp)
 	if err != nil {
 		return nil, err
 	}

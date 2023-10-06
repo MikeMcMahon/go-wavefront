@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"net/http/httputil"
@@ -142,7 +141,7 @@ func (c Client) NewRequest(method, path string, params *map[string]string, body 
 	req.Header.Add("Accept", "application/json")
 	if body != nil {
 		req.Header.Add("Content-Type", "application/json")
-		req.Body = ioutil.NopCloser(bytes.NewReader(body))
+		req.Body = io.NopCloser(bytes.NewReader(body))
 	}
 	return req, nil
 }
@@ -187,12 +186,12 @@ func (c Client) Do(req *http.Request) (io.ReadCloser, error) {
 	var buf []byte
 	var err error
 	if req.Body != nil {
-		buf, err = ioutil.ReadAll(req.Body)
+		buf, err = io.ReadAll(req.Body)
 		if err != nil {
 			return nil, err
 		}
 		// reset the body since we read it already
-		req.Body = ioutil.NopCloser(bytes.NewReader(buf))
+		req.Body = io.NopCloser(bytes.NewReader(buf))
 	}
 
 	for {
@@ -213,7 +212,7 @@ func (c Client) Do(req *http.Request) (io.ReadCloser, error) {
 				retries++
 				// replay the buffer back into the body for retry
 				if req.Body != nil {
-					req.Body = ioutil.NopCloser(bytes.NewReader(buf))
+					req.Body = io.NopCloser(bytes.NewReader(buf))
 				}
 				sleepTime := c.getSleepTime(retries)
 				if c.debug {
@@ -223,7 +222,7 @@ func (c Client) Do(req *http.Request) (io.ReadCloser, error) {
 				time.Sleep(sleepTime)
 				continue
 			}
-			body, err := ioutil.ReadAll(resp.Body)
+			body, err := io.ReadAll(resp.Body)
 			_ = resp.Body.Close()
 			if err != nil {
 				re := newRestError(
