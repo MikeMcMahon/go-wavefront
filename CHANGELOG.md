@@ -5,6 +5,7 @@ Changelog for go-wavefront-management-api.
 ## [2.1.1]
 
 - Upgrade GoLang to 1.21.2
+- Run tidy go mods.
 
 ## [2.1.0]
 
