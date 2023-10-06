@@ -358,7 +358,7 @@ func (d Dashboards) Delete(dashboard *Dashboard, skipTrash bool) error {
 	return nil
 }
 
-// Set Tags is used to set the tags on an existing dashboard
+// SetTags Set Tags is used to set the tags on an existing dashboard
 func (d Dashboards) SetTags(id string, tags []string) error {
 	return doRest(
 		"POST",
@@ -367,7 +367,7 @@ func (d Dashboards) SetTags(id string, tags []string) error {
 		doPayload(tags))
 }
 
-// Sets the ACL on the dashboard with the supplied list of IDs for canView and canModify
+// SetACL Sets the ACL on the dashboard with the supplied list of IDs for canView and canModify
 // an empty []string on canView will remove all values set
 // an empty []string on canModify will set the value to the owner of the token issuing the API call
 func (d Dashboards) SetACL(id string, canView, canModify []string) error {

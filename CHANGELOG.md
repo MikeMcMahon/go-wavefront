@@ -2,6 +2,10 @@
 
 Changelog for go-wavefront-management-api.
 
+## [2.1.1]
+
+- Upgrade GoLang to 1.21.2
+
 ## [2.1.0]
 
 - Dashboard object to omit chart `summarization` field when empty.

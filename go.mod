@@ -1,6 +1,6 @@
 module github.com/WavefrontHQ/go-wavefront-management-api/v2
 
-go 1.18
+go 1.21
 
 require github.com/stretchr/testify v1.7.5
 
