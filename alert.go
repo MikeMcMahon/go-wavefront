@@ -11,6 +11,12 @@ const (
 	AlertTypeClassic   = "CLASSIC"
 )
 
+type AlertTriageDashboard struct {
+	DashboardId string                       `json:"dashboardId"`
+	Parameters  map[string]map[string]string `json:"parameters"`
+	Description string                       `json:"description"`
+}
+
 // Alert represents a single Wavefront Alert
 type Alert struct {
 	// Name is the name given to an Alert
@@ -81,6 +87,12 @@ type Alert struct {
 
 	// Include obsolete metrics in alert query
 	IncludeObsoleteMetrics bool `json:"includeObsoleteMetrics,omitempty"`
+
+	// User-supplied runbook links for this alert
+	RunbookLinks []string `json:"runbookLinks"`
+
+	// User-supplied dashboard and parameters to create dashboard links
+	AlertTriageDashboards []AlertTriageDashboard `json:"alertTriageDashboards"`
 }
 
 type SourceLabelPair struct {

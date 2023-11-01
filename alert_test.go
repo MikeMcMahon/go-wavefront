@@ -54,7 +54,7 @@ func (m *MockCrudAlertClient) Do(req *http.Request) (io.ReadCloser, error) {
 	return testDo(m.T, req, "./fixtures/create-alert-response.json", m.method, &Alert{})
 }
 
-func TestAlerts_CreateUpdateDeleteAlert(t *testing.T) {
+func TestAlerts_CRUDAlert(t *testing.T) {
 	assert := asserts.New(t)
 	baseurl, _ := url.Parse("http://testing.wavefront.com")
 	a := &Alerts{
@@ -81,13 +81,19 @@ func TestAlerts_CreateUpdateDeleteAlert(t *testing.T) {
 		AdditionalInfo:      "please resolve this alert",
 		Tags:                []string{"mytag1", "mytag2"},
 	}
+	var readAlert Alert
+	alertId := "1234"
 
 	// Update should fail because no ID is set
 	assert.Error(a.Update(&alert))
 
 	a.client.(*MockCrudAlertClient).method = "POST"
 	assert.NoError(a.Create(&alert))
-	assert.Equal("1234", *alert.ID)
+	assert.Equal(alertId, *alert.ID)
+
+	a.client.(*MockCrudAlertClient).method = "GET"
+	readAlert.ID = &alertId
+	assert.NoError(a.Get(&readAlert))
 
 	a.client.(*MockCrudAlertClient).method = "PUT"
 	assert.NoError(a.Update(&alert))
@@ -130,13 +136,19 @@ func TestMultiThresholdAlerts_CreateUpdateDeleteAlert(t *testing.T) {
 		AdditionalInfo:      "please resolve this alert",
 		Tags:                []string{"mytag1", "mytag2"},
 	}
+	var readAlert Alert
+	alertId := "1234"
 
 	// Update should fail because no ID is set
 	assert.Error(a.Update(&alert))
 
 	a.client.(*MockCrudAlertClient).method = "POST"
 	assert.NoError(a.Create(&alert))
-	assert.Equal("1234", *alert.ID)
+	assert.Equal(alertId, *alert.ID)
+
+	a.client.(*MockCrudAlertClient).method = "GET"
+	readAlert.ID = &alertId
+	assert.NoError(a.Get(&readAlert))
 
 	a.client.(*MockCrudAlertClient).method = "PUT"
 	assert.NoError(a.Update(&alert))
