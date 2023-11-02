@@ -1,6 +1,10 @@
 # Changelog
 
 Changelog for go-wavefront-management-api.
+## [2.2.1]
+
+- Include missing version resources in release
+
 ## [2.2.0]
 
 - Add missing parameters to the `alert` resource:
