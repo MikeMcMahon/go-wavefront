@@ -1,6 +1,11 @@
 # Changelog
 
 Changelog for go-wavefront-management-api.
+## [2.2.0]
+
+- Add missing parameters to the `alert` resource:
+  - runbookLinks
+  - alertTriageDashboards
 
 ## [2.1.1]
 

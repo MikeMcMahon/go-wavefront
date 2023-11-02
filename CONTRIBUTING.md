@@ -27,5 +27,6 @@ We use [Semantic Versioning](http://semver.org/) on this project. The version is
 1. Commit changes.
 1. Make a new tag (`git tag vX.Y.Z`)
 1. Push changes / tag vX.Y.Z (`git push --tags`)
-1. Publish GitHub a release using that tag.
-    1. Add a summary of the release, as in prior releases.
+1. Publish a GitHub release using that tag.
+    1. Entitle the release with the version.
+    1. Generate release notes using the "Generate release notes" button in GitHub.
