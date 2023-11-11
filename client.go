@@ -7,6 +7,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"github.com/WavefrontHQ/go-wavefront-management-api/v2/clients/csp/auth"
 	"io"
 	"math/rand"
 	"net/http"
@@ -39,6 +40,10 @@ type Config struct {
 	// SkipTLSVerify disables SSL certificate checking and should be used for
 	// testing only
 	SkipTLSVerify bool
+
+	// CspAddress is the address of the CSP API
+	// console-stg.cloud.vmware.com or console.cloud.vmware.com
+	CspAddress string
 }
 
 // Client is used to generate API requests against the Wavefront API.
@@ -67,11 +72,35 @@ func fixAddress(address string) string {
 	return address + "/api/v2/"
 }
 
+func getCspBearerToken(config *Config) (string, error) {
+	client := &auth.Client{
+		CspAddress: fixAddress(config.CspAddress),
+		Insecure:   config.SkipTLSVerify,
+	}
+
+	response, err := client.GetAuthToken(config.Token)
+	if err != nil {
+		return "", err
+	}
+
+	return *response.Payload.AccessToken, nil
+}
+
 // NewClient returns a new Wavefront client according to the given Config
 func NewClient(config *Config) (*Client, error) {
 	baseURL, err := url.Parse(fixAddress(config.Address))
 	if err != nil {
 		return nil, err
+	}
+
+	// Refresh Token, Access Token and Wavefront Service Account Tokens are different lengths.
+	// If CSP Refresh token:
+	if len(config.Token) == 64 {
+		fmt.Printf("Getting CSP bearer token\n")
+		config.Token, err = getCspBearerToken(config)
+		if err != nil {
+			return nil, fmt.Errorf("Could not get CSP bearer token: %v\n", err)
+		}
 	}
 
 	// need to disable http/2 as it doesn't play nicely with nginx.
