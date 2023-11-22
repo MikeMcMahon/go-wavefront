@@ -25,14 +25,6 @@ func TestAccGetAuthToken(t *testing.T) {
 	}
 }
 
-type mockRequest interface {
-	SetBodyParam()
-	SetTimeout()
-}
-
-func newMockRequest {
-}
-
 func TestAuthTokenRequest(t *testing.T) {
 	// Create a test instance of the Client
 	testClient := &Client{}
@@ -42,8 +34,8 @@ func TestAuthTokenRequest(t *testing.T) {
 	operation := testClient.authTokenRequest(apiToken)
 
 	// Assertions
-	assert.NotNil(t, operation, "Operation should not be nil")
-	assert.Equal(t, "retrieveAuthToken", operation.ID, "Operation ID should match")
+	assert.NotNil(t, operation, "CSPTokenRequest should not be nil")
+	assert.Equal(t, "retrieveAuthToken", operation.ID, "CSPTokenRequest ID should match")
 	assert.Equal(t, "POST", operation.Method, "HTTP method should be POST")
 	assert.Equal(t, "/am/api/auth/api-tokens/authorize", operation.PathPattern, "Path pattern should match")
 	assert.ElementsMatch(t, []string{"app/json", "application/json"}, operation.ProducesMediaTypes, "Produces media types should match")
@@ -60,8 +52,8 @@ func TestAuthTokenRequest(t *testing.T) {
 	}
 
 	// Check Body
-	assert.NotNil(t, operation.Params.WriteToRequest(newMockRequest, ).Body, "Body should not be nil")
-	assert.Equal(t, apiToken, *operation.Params.Body.(*RequestBody).ApiToken, "API token in the request body should match")
+	assert.NotNil(t, operation.Params.(*RequestWriter).Body, "Body should not be nil")
+	assert.Equal(t, apiToken, *operation.Params.(*RequestWriter).Body.ApiToken, "API token in the request body should match")
 
 	// Check Reader
 	assert.NotNil(t, operation.Reader, "Reader should not be nil")
@@ -71,5 +63,4 @@ func TestAuthTokenRequest(t *testing.T) {
 	if !ok {
 		t.Errorf("Expected the returned Reader to be a ResponseReader")
 	}
-
 }

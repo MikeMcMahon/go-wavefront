@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/WavefrontHQ/go-wavefront-management-api/v2/clients/csp/auth"
+	runtime "github.com/go-openapi/runtime/client"
 	"io"
 	"math/rand"
 	"net/http"
@@ -72,15 +73,51 @@ func fixAddress(address string) string {
 	return address + "/api/v2/"
 }
 
-func getCspBearerToken(config *Config) (string, error) {
-	client := &auth.Client{
-		CspAddress: fixAddress(config.CspAddress),
-		Insecure:   config.SkipTLSVerify,
+func disableSSL(skipTLS bool) (*http.Transport, error) {
+	options := runtime.TLSClientOptions{InsecureSkipVerify: skipTLS}
+	cfg, err := runtime.TLSClientAuth(options)
+	if err != nil {
+		return nil, err
 	}
 
-	response, err := client.GetAuthToken(config.Token)
+	transport := &http.Transport{
+		// TODO: @bwinter: Why is NextProto set?
+		TLSNextProto:    map[string]func(authority string, c *tls.Conn) http.RoundTripper{},
+		TLSClientConfig: cfg,
+	}
+
+	return transport, nil
+}
+
+// GetAuthToken retrieves auth token for csp users
+// When accessing and endpoint secured by CSP,
+// the received `token` must be provided in the
+// `Authorization` request header field as follows:
+// `Authorization: Bearer {token}`
+func getCspBearerToken(config *Config) (string, error) {
+	baseURL, err := url.Parse(config.CspAddress)
 	if err != nil {
 		return "", err
+	}
+
+	request := auth.CSPTokenRequest(config.Token)
+
+	transport := runtime.New(baseURL.Host, baseURL.Path, nil)
+	transport.SetDebug(false)
+	transport.Transport, err = disableSSL(config.SkipTLSVerify)
+
+	result, err := transport.Submit(request)
+	if err != nil {
+		return "", err
+	}
+
+	response, ok := result.(*auth.OK200)
+	if !ok {
+		return "", response
+	}
+
+	if response != nil && !strings.EqualFold(*response.Payload.TokenType, "bearer") {
+		return "", fmt.Errorf("expected a `bearer` token type, got: %s", *response.Payload.TokenType)
 	}
 
 	return *response.Payload.AccessToken, nil
@@ -98,6 +135,7 @@ func NewClient(config *Config) (*Client, error) {
 	if len(config.Token) == 64 {
 		fmt.Printf("Getting CSP bearer token\n")
 		config.Token, err = getCspBearerToken(config)
+		//
 		if err != nil {
 			return nil, fmt.Errorf("Could not get CSP bearer token: %v\n", err)
 		}

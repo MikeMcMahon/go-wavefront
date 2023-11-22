@@ -19,37 +19,37 @@ func (o *ResponseReader) ReadResponse(response runtime.ClientResponse, consumer 
 	switch response.Code() {
 	case 200:
 		result := &OK200{}
-		if err := result.readResponse(response, consumer, o.formats); err != nil {
+		if err := result.readResponse(response, consumer, o.Formats); err != nil {
 			return nil, err
 		}
 		return result, nil // Only case with a non error response.
 	case 400:
 		result := &InvalidRequest400{}
-		if err := result.readResponse(response, consumer, o.formats); err != nil {
+		if err := result.readResponse(response, consumer, o.Formats); err != nil {
 			return nil, err
 		}
 		return nil, result
 	case 404:
 		result := &NotFound404{}
-		if err := result.readResponse(response, consumer, o.formats); err != nil {
+		if err := result.readResponse(response, consumer, o.Formats); err != nil {
 			return nil, err
 		}
 		return nil, result
 	case 409:
 		result := &Conflict409{}
-		if err := result.readResponse(response, consumer, o.formats); err != nil {
+		if err := result.readResponse(response, consumer, o.Formats); err != nil {
 			return nil, err
 		}
 		return nil, result
 	case 429:
 		result := &TooManyRequests429{}
-		if err := result.readResponse(response, consumer, o.formats); err != nil {
+		if err := result.readResponse(response, consumer, o.Formats); err != nil {
 			return nil, err
 		}
 		return nil, result
 	case 500:
 		result := &Unexpected500{}
-		if err := result.readResponse(response, consumer, o.formats); err != nil {
+		if err := result.readResponse(response, consumer, o.Formats); err != nil {
 			return nil, err
 		}
 		return nil, result
