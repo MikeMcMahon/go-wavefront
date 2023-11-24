@@ -31,7 +31,7 @@ func TestUsers_Find(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T: t,
@@ -88,7 +88,7 @@ func TestUsers_NilID(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T:      t,
@@ -110,7 +110,7 @@ func TestUsers_CreateUpdateDelete(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T:      t,

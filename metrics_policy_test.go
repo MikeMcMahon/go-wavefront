@@ -2,11 +2,12 @@ package wavefront
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"io"
 	"net/http"
 	"net/url"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type MockMetricsPolicyClient struct {
@@ -34,7 +35,7 @@ func TestMetricsPolicy_Get(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T: t,
@@ -68,7 +69,7 @@ func TestMetricsPolicy_Put(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T: t,

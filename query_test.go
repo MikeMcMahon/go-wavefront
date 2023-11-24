@@ -35,7 +35,7 @@ func TestQuery(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 		},
@@ -85,7 +85,7 @@ func getQueryOutputFromFixture(fixture string) (*QueryResponse, error) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 		},

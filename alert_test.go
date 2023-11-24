@@ -33,7 +33,7 @@ func TestAlerts_PaginatedFind(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T: t,
@@ -62,7 +62,7 @@ func TestAlerts_CRUDAlert(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			method: "PUT",
@@ -111,7 +111,7 @@ func TestMultiThresholdAlerts_CreateUpdateDeleteAlert(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			method: "PUT",
