@@ -34,7 +34,7 @@ func TestServiceAccounts_Find(t *testing.T) {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T: t,
@@ -61,7 +61,7 @@ func testClient(t *testing.T) *ServiceAccounts {
 			Client: Client{
 				Config:     &Config{Token: "1234-5678-9977"},
 				BaseURL:    baseurl,
-				httpClient: http.DefaultClient,
+				HttpClient: http.DefaultClient,
 				debug:      true,
 			},
 			T: t,

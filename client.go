@@ -53,8 +53,8 @@ type Client struct {
 	// The maximum amount of time we will wait
 	MaxRetryDurationInMS int
 
-	// httpClient is the client that will be used to make requests against the API.
-	httpClient *http.Client
+	// HttpClient is the client that will be used to make requests against the API.
+	HttpClient *http.Client
 
 	// debug, if set, will cause all requests to be dumped to the screen before sending.
 	debug bool
@@ -80,7 +80,7 @@ func NewClient(config *Config) (*Client, error) {
 	c := &Client{
 		Config:  &configCopy,
 		BaseURL: baseURL,
-		httpClient: &http.Client{
+		HttpClient: &http.Client{
 			Transport: &http.Transport{
 				Proxy:        http.ProxyFromEnvironment,
 				TLSNextProto: map[string]func(authority string, c *tls.Conn) http.RoundTripper{},
@@ -94,7 +94,7 @@ func NewClient(config *Config) (*Client, error) {
 	// ENABLE HTTP Proxy
 	if config.HttpProxy != "" {
 		proxyUrl, _ := url.Parse(config.HttpProxy)
-		c.httpClient.Transport = &http.Transport{
+		c.HttpClient.Transport = &http.Transport{
 			Proxy:        http.ProxyURL(proxyUrl),
 			TLSNextProto: map[string]func(authority string, c *tls.Conn) http.RoundTripper{},
 		}
@@ -105,7 +105,7 @@ func NewClient(config *Config) (*Client, error) {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
-		c.httpClient.Transport = tr
+		c.HttpClient.Transport = tr
 	}
 
 	return c, nil
@@ -195,7 +195,7 @@ func (c Client) Do(req *http.Request) (io.ReadCloser, error) {
 	}
 
 	for {
-		resp, err := c.httpClient.Do(req)
+		resp, err := c.HttpClient.Do(req)
 		if err != nil {
 			return nil, err
 		}
